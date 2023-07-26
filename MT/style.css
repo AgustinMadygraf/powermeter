@@ -1,0 +1,10 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .form-container button,
+  .form-container input[type="submit"] {
+    width: 200px;
+  }
+  

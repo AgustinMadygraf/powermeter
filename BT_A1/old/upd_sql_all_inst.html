@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intermediario para procesar_powermeter.php</title>
+    <style>
+        /* Estilos CSS aquí (igual que los proporcionados) */
+    </style>
+</head>
+<body>
+    <h1>Intermediario para procesar_powermeter.php</h1>
+    <table id="csvTable">
+        <!-- Aquí se mostrará el contenido del archivo CSV -->
+    </table>
+    <br>
+    <button onclick="sendSelectedRows()">Enviar Filas Seleccionadas</button>
+
+    <script>
+        // Función para cargar el contenido del archivo CSV en la tabla
+        function loadCSVTable(csvContent) {
+            const lines = csvContent.split('\n');
+            const table = document.getElementById('csvTable');
+
+            for (let i = 0; i < lines.length; i++) {
+                const row = lines[i].split(',');
+                const newRow = table.insertRow();
+
+                for (let j = 0; j < row.length; j++) {
+                    const cell = newRow.insertCell();
+                    cell.innerHTML = row[j];
+                }
+            }
+        }
+
+        // Leer el contenido del archivo CSV y cargar la tabla cuando se carga la página
+        fetch('datos_inst.csv')
+            .then(response => response.text())
+            .then(data => loadCSVTable(data));
+
+        // Función para enviar las filas seleccionadas al archivo PHP
+        function sendSelectedRows() {
+            const selectedRows = document.querySelectorAll('#csvTable tr.selected');
+            selectedRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const payload = {
+                    timestamp: cells[1].innerText,
+                    'R:v': cells[2].innerText,
+                    'R:i': cells[3].innerText,
+                    'R:p': cells[4].innerText,
+                    'R:q': cells[5].innerText,
+                    'S:v': cells[6].innerText,
+                    'S:i': cells[7].innerText,
+                    'S:p': cells[8].innerText,
+                    'S:q': cells[9].innerText,
+                    'T:v': cells[10].innerText,
+                    'T:i': cells[11].innerText,
+                    'T:p': cells[12].innerText,
+                    'T:q': cells[13].innerText,
+                };
+
+                const queryString = Object.keys(payload)
+                    .map(key => key + '=' + payload[key])
+                    .join('&');
+
+                fetch('procesar_powermeter.php?' + queryString)
+                    .then(response => response.text())
+                    .then(result => console.log(result))
+                    .catch(error => console.error(error));
+            });
+        }
+
+        // Función para agregar o quitar la clase 'selected' cuando se hace clic en una fila
+        document.getElementById('csvTable').addEventListener('click', function (event) {
+            const row = event.target.closest('tr');
+            if (row) {
+                row.classList.toggle('selected');
+            }
+        });
+    </script>
+</body>
+</html>
