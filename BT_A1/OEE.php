@@ -47,7 +47,7 @@
               </tr>
               <tr>
                 <td>Paro Programado</td>
-                <td>Es el tiempo durante el cual se planificó intencionalmente detener la producción del equipo para realizar tareas de mantenimiento, ajustes o cambios en la configuración.</td>
+                <td>Es el tiempo durante el cual se planificó intencionalmente detener la producción del equipo.</td>
               </tr>
               <tr>
                 <td>Tiempo Operativo</td>
@@ -58,57 +58,51 @@
                 <td>Es el tiempo no planificado durante el cual el equipo deja de producir debido a fallos o problemas inesperados, como averías, falta de materiales, etc.</td>
               </tr>
             </table>
-        </section>
+            <br>
+            <br>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <div id="chart_div"></div>
+            <script>
+              google.charts.load('current', {'packages':['bar']});
+              google.charts.setOnLoadCallback(drawChart);
+              var TProgProd = 40;
+              var ParoProg = 100 - TProgProd;
+              var TOper = <?php echo $disp; ?>;
+              var ParoNoProg = TProgProd - TOper;
+              var TProdReal = 3;
+              var TAfecVel = TOper - TProdReal;
+              var TProdNeta = 2 ;
+              var TAfecCal = TProdReal - TProdNeta;
 
-        <section>
-            <h1>Gráfico Circular y Subgráfico:</h1>
-            <div id="chartContainer1" style="height: 300px; width: 50%; display: inline-block;"></div>
-            <div id="chartContainer2" style="height: 300px; width: 50%; display: inline-block;"></div>
-           </section>
+              function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                  ['Tiempo [horas]' ,  ' Tiempo Programado productivo', 'Paro programado', 'Tiempo operativo', 'Paro no programado', 'Tasa de producción real', 'Afectación por velocidad de producción', 'Tasa de producción neta', 'Afectación por calidad'],
+                  ['Tiempo Calendario'                  , TProgProd , ParoProg  , 0     , 0          , 0          , 0         , 0         , 0         ],
+                  ['Tiempo Programado productivo'       , 0         , 0         , TOper , ParoNoProg , 0          , 0         , 0         , 0         ],
+                  ['Tiempo Operativo'                   , 0         , 0         , TOper , 0          , 0          , 0         , 0         , 0         ],
+                  ['Tasa de producción de diseño 100%'  , 0         , 0         , 0     , 0          , TProdReal  , TAfecVel  , 0         , 0         ],
+                  ['Tasa de producción real'            , 0         , 0         , 0     , 0          , 0          , 0         , TProdNeta , TAfecCal  ],
+                  ['Tasa de producción neta'            , 0         , 0         , 0     , 0          , 0          , 0         , TProdNeta , 0         ]
+                ]);
+
+                var options = { isStacked: true, 
+                                height: 400,
+                                chart: {  title:    'Disponibilidad',
+                                          subtitle: 'Tiempo de funcionalidad del sistema',},
+                                bars: 'horizontal', 
+                                hAxis: {format: 'decimal'},
+                                colors: ['#1b9e77' ] };
+
+                var chart = new google.charts.Bar(document.getElementById('chart_div'));
+
+                chart.draw(data, google.charts.Bar.convertOptions(options));
+
+              }
+            </script>
+        </section>
   </main>
   <footer>
     <?php require "footer.php";?>
   </footer>
-
-  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script>
-    window.onload = function () {
-      var chart1 = new CanvasJS.Chart("chartContainer1", {
-        animationEnabled: true,
-        title: {
-          text: "T5 - Tiempo Calendario"
-        },
-        data: [{
-          type: "pie",
-          startAngle: 240,
-          yValueFormatString: "##0.00\"%\"",
-          indexLabel: "{label} {y}",
-          dataPoints: [
-            { y: 50, label: "T4 - Tiempo programado productivo" },
-            { y: 20, label: "[T5-T4] Paro Programado" }
-          ]
-        }]
-      });
-      chart1.render();
-
-      var chart2 = new CanvasJS.Chart("chartContainer2", {
-        animationEnabled: true,
-        title: {
-          text: "T4 - Tiempo programado productivo"
-        },
-        data: [{
-          type: "pie",
-          startAngle: 240,
-          yValueFormatString: "##0.00\"%\"",
-          indexLabel: "{label} {y}",
-          dataPoints: [
-            { y: 60, label: "[T3] Tiempo operativo" },
-            { y: 10, label: "[T4-T3] Paro no programado" }
-          ]
-        }]
-      });
-      chart2.render();
-    }
-  </script>
 </body>
 </html>

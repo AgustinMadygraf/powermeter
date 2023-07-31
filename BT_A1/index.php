@@ -29,26 +29,26 @@
 
         function drawChart() {
         // Obtener la velocidad de la máquina desde tu fuente de datos
-        var velocidad = <?php echo $disp;?>;
+        var velocidad = <?php echo number_format($disp*1.68,2);?>;
         var tamaño = 350;
 
         var velocidadData = google.visualization.arrayToDataTable([
             ['Label', 'Value'],
-            ['[%]', velocidad]
+            ['horas/semana', velocidad]
         ]);
 
         var velocidadOptions = {
             width: tamaño,
             height: tamaño,
             redFrom: 0,
-            redTo: 38,
-            yellowFrom: 38,
-            yellowTo: 57,
-            greenFrom: 57,
-            greenTo: 100,
+            redTo: 64,
+            yellowFrom: 64,
+            yellowTo: 96,
+            greenFrom: 96,
+            greenTo: 168,
             minorTicks: 6,
-            max: 100,
-            majorTicks: ['0', '25', '50', '75', '100']
+            max: 168,
+            majorTicks: ['0', '24', '72', '96', '120', '144', '168']
         };
 
         var velocidadChart = new google.visualization.Gauge(document.getElementById('velocidad_chart_div'));
@@ -57,9 +57,10 @@
     <header>
         <?php require 'header.php'; ?> 
     </header>
-    <nav>
+    <nav style="position: relative;">
         <?php require 'grafico.php'; ?>
     </nav>
+    <br>
     <br>
     <br>
     <main class="flex-container">
@@ -70,11 +71,11 @@
             </p>
             <table>
                 <tr>
-                    <td>Horas de Máquina <br>en producción: </td>    
+                    <td>Horas totales de Máquina <br>en producción: </td>    
                     <td><?php echo $horas_prod;?>       </td>
                 </tr>
                 <tr>
-                    <td>Horas de Máquina <br>parada:        </td>          
+                    <td>Horas totales de Máquina <br>parada:        </td>          
                     <td><?php echo $horas_improd;?>     </td>
                 <tr>
                 </tr>
@@ -116,6 +117,10 @@
             <?php if (isset($_GET['table']) && $_GET['table'] === 'true') { require "table.php";}?>
         </section>
     </main>
+    <br>
+    <br>
+    <br>
+    <br>
     <footer>
         <?php require "footer.php";?>
     </footer>

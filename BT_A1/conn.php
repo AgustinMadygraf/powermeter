@@ -39,86 +39,45 @@ function getArraySQL($sql) {
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $sql = "SELECT `unixtime`, `potencia_III` FROM `inst_bt_a1` ORDER BY `inst_bt_a1`.`unixtime` DESC";
 $rawdata = getArraySQL($sql);
-$ult_time = $rawdata[0]["unixtime"];
-$fechaHoraActual = date("Y-m-d H:i:s");
-$unixtimeActual = strtotime($fechaHoraActual);
-$dif_upd_sql = $unixtimeActual - $ult_time;
-$upd_sql = false;
-
-// Configuración de la URL del archivo CSV y la ubicación donde guardarlo
+$fechaHoraActual = date("Y-m-d H:i:s");                                         //[A]
+$unixtimeActual = strtotime($fechaHoraActual);                                  //[A] Fecha y hora actual
+$ult_time = $rawdata[0]["unixtime"];                                            //[B] última actualización SQL
+$dif_upd_sql = $unixtimeActual - $ult_time;                                     //[A-B]
 $url = 'http://panel.powermeter.com.ar/descargar/directa/inst/56ae1c10-059b-4764-abec-f7bdc5e56603/';
-$save_location = 'C:/AppServ/www/mediciones/BT_A1/datos_inst.csv';
-
-// Zona horaria
+$location_datos_inst_csv = 'C:/AppServ/www/CSV/powermeter/datos_inst.csv';
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 
-// Obtenemos la fecha y hora actual
-$fechaHoraActual = date("Y-m-d H:i:s");
-$unixtimeActual = strtotime($fechaHoraActual);
+
+
 
 // Cálculo de diferencias de tiempo
-$archivo = 'datos_inst.csv';
-$msg1 = 0;
-if (file_exists($archivo)) {
-    $fechaModificacion = filemtime($archivo);
-    $msg1 = "<td>Fecha de modificación de <br> $archivo</td><td>$fechaModificacion</td><td> " . date('d-m-Y H:i:s', $fechaModificacion) . "</td>";
+if (file_exists($location_datos_inst_csv)) {
+    $fechaModificacion = filemtime($location_datos_inst_csv);                   //[C] Fecha modificacionCSV
+    $msg1 = "<td>Fecha de modificación de <br> $location_datos_inst_csv</td><td>$fechaModificacion</td><td> " . date('d-m-Y H:i:s', $fechaModificacion) . "</td>";
 } else {
-    $msg1 = "<td>El archivo $archivo no existe.</td>";
-}
-$msg2 = "";
-$upd_sql = false;
-$dif_upd_csv = $unixtimeActual - $fechaModificacion;
-$dif2_upd_csv = 900 - $dif_upd_csv;
-
-// Obtener horas, minutos y segundos a partir de $dif_upd_csv
-$horas_csv = floor($dif_upd_csv / 3600);
-$minutos_csv = floor(($dif_upd_csv % 3600) / 60);
-$segundos_csv = $dif_upd_csv % 60;
-
-// Formatear la cadena para que esté en formato hh:mm:ss
-$dif_csv = sprintf("%02d:%02d:%02d", $horas_csv, $minutos_csv, $segundos_csv);
-
-// Obtener horas, minutos y segundos a partir de $dif_upd_csv
-$horas_sql = floor($dif_upd_sql / 3600);
-$minutos_sql = floor(($dif_upd_sql % 3600) / 60);
-$segundos_sql = $dif_upd_sql % 60;
-
-// Formatear la cadena para que esté en formato hh:mm:ss
-$dif_sql = sprintf("%02d:%02d:%02d", $horas_sql, $minutos_sql, $segundos_sql);
-
-// Calcular la diferencia en días, horas, minutos y segundos
-$dias_sql = floor($dif_upd_sql / (60 * 60 * 24));
-$horas_sql = floor(($dif_upd_sql - ($dias_sql * 60 * 60 * 24)) / (60 * 60));
-$minutos_sql = floor(($dif_upd_sql - ($dias_sql * 60 * 60 * 24) - ($horas_sql * 60 * 60)) / 60);
-$segundos_sql = $dif_upd_sql - ($dias_sql * 60 * 60 * 24) - ($horas_sql * 60 * 60) - ($minutos_sql * 60);
-
-if ($dif_upd_sql > 900) {
-    $upd_sql = true;
+    $msg1 = "<td>El archivo $location_datos_inst_csv no existe.</td>";
 }
 
-// Ruta del archivo CSV
-$csvFile = 'C:/AppServ/www/mediciones/BT_A1/datos_inst.csv';
+$dif_upd_csv = $unixtimeActual - $fechaModificacion;                            // [A-C]tiempo desde última vez descargado CSV
+$horas_csv = floor($dif_upd_csv / 3600);                                        // [A-C]tiempo desde última vez descargado CSV
+$minutos_csv = floor(($dif_upd_csv % 3600) / 60);                               // [A-C]tiempo desde última vez descargado CSV
+$segundos_csv = $dif_upd_csv % 60;                                              // [A-C]tiempo desde última vez descargado CSV
+$dif_csv = sprintf("%02d:%02d:%02d", $horas_csv, $minutos_csv, $segundos_csv);  // [A-C]tiempo desde última vez descargado CSV
 
-// Función para obtener el número más grande del campo "timestamp"
-function getLargestTimestamp($csvFile)
-{
-    $largestTimestamp = 0;
-    if (($handle = fopen($csvFile, "r")) !== FALSE) {
-        // Saltar la primera línea (cabecera)
-        fgetcsv($handle);
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $timestamp = intval($data[1]);
-            if ($timestamp > $largestTimestamp) {
-                $largestTimestamp = $timestamp;
-            }
-        }
-        fclose($handle);
-    }
-    return $largestTimestamp;
-}
 
-// Obtener el número más grande del campo "timestamp"
-$ult_time_csv = getLargestTimestamp($csvFile);
+
+$horas_sql = floor($dif_upd_sql / 3600);                                        //[A-B] Diferencia SQL	
+$minutos_sql = floor(($dif_upd_sql % 3600) / 60);                               //[A-B] Diferencia SQL	
+$segundos_sql = $dif_upd_sql % 60;                                              //[A-B] Diferencia SQL	
+$dif_sql = sprintf("%02d:%02d:%02d", $horas_sql, $minutos_sql, $segundos_sql);  //[A-B] Diferencia SQL	
+
+
+function getLargestTimestamp($location_datos_inst_csv){                                         // Función para obtener el número más grande del campo "timestamp"
+    if (!file_exists($location_datos_inst_csv)) { return 0; }
+    $timestamps = array_map('intval', array_column(array_map('str_getcsv', file($location_datos_inst_csv)), 1));
+    return max($timestamps);}
+$ult_time_csv = getLargestTimestamp($location_datos_inst_csv);
+
 $dif3_upd_csv = $unixtimeActual - $ult_time_csv;
 
 $horas_csv3 = floor($dif3_upd_csv / 3600);
@@ -128,7 +87,6 @@ $segundos_csv3 = $dif3_upd_csv % 60;
 // Formatear la cadena para que esté en formato hh:mm:ss
 $dif_csv3 = sprintf("%02d:%02d:%02d", $horas_csv3, $minutos_csv3, $segundos_csv3);
 
-$ult_time_csv = getLargestTimestamp($csvFile);
 $dif4_upd_csv = $ult_time_csv - $ult_time;
 
 $horas_csv4 = floor($dif4_upd_csv / 3600);

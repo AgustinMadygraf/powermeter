@@ -1,6 +1,6 @@
 <?php
 $archivo = 'datos_inst.csv';
-$save_location = 'C:/AppServ/www/powermeter/BT_A1/datos_inst.csv';
+$save_location = 'C:/AppServ/www/CSV/powermeter/datos_inst.csv';
 $url = 'http://panel.powermeter.com.ar/descargar/directa/inst/56ae1c10-059b-4764-abec-f7bdc5e56603/';
 $destino = "index.php";
 // Realizar la descarga y guardar el archivo en la ubicación especificada  

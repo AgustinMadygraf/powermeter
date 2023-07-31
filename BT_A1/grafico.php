@@ -37,15 +37,13 @@
                             })()
                         }]
             });
-        });
-
-        
-    </script>
+        });        
+</script>
 
 <div id="container" class="graf"></div>
 
 <br>
-        <div class="form-container">
+        <div style="position: relative;">
             <form action="index.php" method="GET">
                 <?php if (isset($_GET['periodo'])) { echo "<input type='hidden' name='periodo' value=" . $_GET['periodo'] . ">";
                 };

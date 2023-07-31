@@ -54,10 +54,6 @@
               timeValue = (timeValue / 60).toFixed(1);
               timeUnit = 'horas';
 
-              if (timeValue > 24) {
-                timeValue = (timeValue / 24).toFixed(1);
-                timeUnit = 'días';
-              }
             }
 
             return '<b>' + this.series.name + '</b><br/>' +
@@ -109,6 +105,10 @@
     <?php require 'header.php'; ?> 
   </header>
   <nav>
+      <br>
+      <br>
+      <br>
+      <br>
       <div id="container" class="graf"></div>
   </nav>
   <main>

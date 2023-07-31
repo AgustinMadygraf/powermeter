@@ -27,7 +27,6 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `inst_bt_a1`
 --
-
 CREATE TABLE `inst_bt_a1` (
   `id` int(11) NOT NULL,
   `unixtime` int(16) NOT NULL,
@@ -36,11 +35,14 @@ CREATE TABLE `inst_bt_a1` (
   `potencia_t` float NOT NULL,
   `potencia_III` float GENERATED ALWAYS AS (((`potencia_r` + `potencia_s`) + `potencia_t`)) VIRTUAL,
   `datetime` datetime GENERATED ALWAYS AS (from_unixtime(`unixtime`)) VIRTUAL,
+  `dia` int(11) GENERATED ALWAYS AS (DAYOFWEEK(FROM_UNIXTIME(`unixtime`))
+
+  ) VIRTUAL,
   `v_r` float NOT NULL,
   `v_s` float NOT NULL,
-  `v_t` float NOT NULL
+  `v_t` float NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Volcado de datos para la tabla `inst_bt_a1`
 --
