@@ -2,7 +2,7 @@ import csv
 import requests
 
 # Definir la URL del archivo procesar_powermeter.php
-url = 'http://localhost/mediciones/BT_A1/procesar_powermeter.php'
+url = 'http://localhost/powermeter/BT_A1/procesar_powermeter.php'
 
 # Función para mostrar mensajes de error
 def show_error(error_message):

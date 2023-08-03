@@ -61,28 +61,22 @@
             <br>
             <br>
             <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <div id="chart_div"></div>
+            <div id="chart_div_disp"></div>
+            <div id="chart_div_perf"></div>
             <script>
               google.charts.load('current', {'packages':['bar']});
               google.charts.setOnLoadCallback(drawChart);
               var TProgProd = 40;
-              var ParoProg = 100 - TProgProd;
-              var TOper = <?php echo $disp; ?>;
+              var ParoProg = 168 - TProgProd;
+              var TOper = <?php echo number_format( $disp*1.68,2); ?>; // horas
               var ParoNoProg = TProgProd - TOper;
-              var TProdReal = 3;
-              var TAfecVel = TOper - TProdReal;
-              var TProdNeta = 2 ;
-              var TAfecCal = TProdReal - TProdNeta;
 
               function drawChart() {
                 var data = google.visualization.arrayToDataTable([
-                  ['Tiempo [horas]' ,  ' Tiempo Programado productivo', 'Paro programado', 'Tiempo operativo', 'Paro no programado', 'Tasa de producción real', 'Afectación por velocidad de producción', 'Tasa de producción neta', 'Afectación por calidad'],
-                  ['Tiempo Calendario'                  , TProgProd , ParoProg  , 0     , 0          , 0          , 0         , 0         , 0         ],
-                  ['Tiempo Programado productivo'       , 0         , 0         , TOper , ParoNoProg , 0          , 0         , 0         , 0         ],
-                  ['Tiempo Operativo'                   , 0         , 0         , TOper , 0          , 0          , 0         , 0         , 0         ],
-                  ['Tasa de producción de diseño 100%'  , 0         , 0         , 0     , 0          , TProdReal  , TAfecVel  , 0         , 0         ],
-                  ['Tasa de producción real'            , 0         , 0         , 0     , 0          , 0          , 0         , TProdNeta , TAfecCal  ],
-                  ['Tasa de producción neta'            , 0         , 0         , 0     , 0          , 0          , 0         , TProdNeta , 0         ]
+                  ['Tiempo [horas]' ,  ' Tiempo Programado productivo', 'Paro programado', 'Tiempo operativo', 'Paro no programado'],
+                  ['Tiempo Calendario semana'                  , TProgProd , ParoProg  , 0     , 0 ],
+                  ['horas programadas productivas'       , 0         , 0         , TOper , ParoNoProg  ],
+                  ['Horas Operativas'                   , 0         , 0         , TOper , 0                ]
                 ]);
 
                 var options = { isStacked: true, 
@@ -93,7 +87,39 @@
                                 hAxis: {format: 'decimal'},
                                 colors: ['#1b9e77' ] };
 
-                var chart = new google.charts.Bar(document.getElementById('chart_div'));
+                var chart = new google.charts.Bar(document.getElementById('chart_div_disp'));
+
+                chart.draw(data, google.charts.Bar.convertOptions(options));
+
+              }
+            </script>
+            <script>
+              google.charts.load('current', {'packages':['bar']});
+              google.charts.setOnLoadCallback(drawChart);
+              var ProdDiseno = <?php echo $disp*12096; ?>; //1.68*120*60
+
+              var TProdReal = 30000;
+              var TAfecVel = ProdDiseno - TProdReal;
+              var TProdNeta = 25000 ;
+              var TAfecCal = TProdReal - TProdNeta;
+
+              function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                  ['Producción [unidades]' ,  ' Producción real', 'Afectación por velocidad máquina', 'Producción neta', 'Afectación por calidad'],
+                  ['Producción de diseño 100%'  , TProdReal , TAfecVel  , 0         , 0         ],
+                  ['Producción real'            , 0         , 0         , TProdNeta , TAfecCal  ],
+                  ['Producción neta'            , 0         , 0         , TProdNeta , 0         ] 
+                ]);
+
+                var options = { isStacked: true, 
+                                height: 400,
+                                chart: {  title:    'Perfonmance & calidad',
+                                          subtitle: '[agregar subtitulo]',},
+                                bars: 'horizontal', 
+                                hAxis: {format: 'decimal'},
+                                colors: ['#1b4e77' ] };
+
+                var chart = new google.charts.Bar(document.getElementById('chart_div_perf'));
 
                 chart.draw(data, google.charts.Bar.convertOptions(options));
 
