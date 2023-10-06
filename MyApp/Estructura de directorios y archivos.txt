@@ -1,0 +1,23 @@
+myapp/
+├── config/
+│   └── config.json
+├── logs/
+├── scripts/
+│   ├── db/
+│   │   ├── __init__.py
+│   │   ├── check_db_table.py
+│   │   ├── create_db.py
+│   │   ├── create_table.py
+│   │   ├── mysql_connector.py
+│   ├── data/
+│   │   ├── __init__.py
+│   │   ├── data_reader.py
+│   │   ├── data_validator.py
+│   ├── gui/
+│   │   ├── __init__.py
+│   │   ├── gui_v1.py
+│   ├── __init__.py
+│   ├── log_setup.py
+│   ├── main.py
+│   └── server_communication.py
+└── requirements.txt

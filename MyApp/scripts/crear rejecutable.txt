@@ -1,0 +1,1 @@
+python -m PyInstaller --onefile auto_run.py
