@@ -2,7 +2,7 @@
 import mysql.connector
 import json
 import os
-import create_db, create_table
+#from db import create_db, create_table  # Asegúrate de importar create_db y create_table desde la ubicación correcta
 
 def check_database_table_exists(config_path):
     connection = None  # Inicializar la variable de conexión
@@ -16,8 +16,6 @@ def check_database_table_exists(config_path):
             db = config_data.get('db', '')
             table = config_data.get('table', '')
             sql_file = config_data.get('sql_file', '')
-            
-
 
         # Conectar a MySQL
         connection = mysql.connector.connect(
@@ -44,7 +42,7 @@ def check_database_table_exists(config_path):
             print(f"La tabla '{table}' existe en la base de datos '{db}'.")
         else:
             print(f"La tabla '{table}' no existe en la base de datos '{db}'.")
-            create_table.create_table_from_sql(host, user, password, db, table, sql_file )
+            create_table.create_table_from_sql(host, user, password, db, table, sql_file)
 
     except mysql.connector.Error as error:
         print(f"Error al conectar a MySQL: {error}")
@@ -55,8 +53,6 @@ def check_database_table_exists(config_path):
 
 if __name__ == "__main__":
     script_directory = os.path.dirname(os.path.abspath(__file__))
-    config_path = os.path.join(script_directory, '..', '..', 'config', 'config.json')
-
+    config_path = "C:/config_python/config.json"
 
     check_database_table_exists(config_path)
-

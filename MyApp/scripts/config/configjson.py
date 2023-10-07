@@ -1,10 +1,7 @@
-#config.py
 import json
-import os
 
-def load_config(script_directory):
-    config_directory = os.path.abspath(script_directory)
-    config_file_path = os.path.join(config_directory, 'config', 'config.json')  # Corrección en esta línea
+def load_config():
+    config_file_path = "C:/config_python/config.json"  # Ruta al archivo config.json
     print("Config File Path:", config_file_path)
 
     try:

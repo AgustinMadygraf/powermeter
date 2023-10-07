@@ -1,4 +1,3 @@
-#auto_run.py
 from config import configjson
 import os
 import datetime
@@ -6,10 +5,9 @@ import time
 import main
 
 while True:
-    # Obtener la ubicación del script auto_run.py
-    script_directory = os.path.dirname(os.path.abspath(__file__))
-    print("script_directory: ",script_directory)
-    config_data = configjson.load_config(script_directory)
+    # Ruta completa al archivo config.json
+
+    config_data = configjson.load_config()
 
     if config_data:
         end_time_str = config_data.get('end_time', '')

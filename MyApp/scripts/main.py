@@ -1,9 +1,8 @@
-#main.py
 from data import data_reader, data_validator
+#from db import check_db_table
 import server_communication
 import datetime
 import json
-import os
 import sys
 
 def main():
@@ -12,14 +11,13 @@ def main():
     start_time = datetime.datetime.now()
     print(f"Inicio del proceso: {start_time}")
     
-    # Obtener la ubicación del directorio actual (donde se encuentra main.py)
-    script_directory = os.path.dirname(os.path.abspath(__file__))
-    
-    # Navegar desde el directorio del script hasta el directorio de configuración
-    config_directory = os.path.join(script_directory, 'config')
-    config_file_path = os.path.join(config_directory, 'config.json')
+    # Ruta completa al archivo config.json
+    config_file_path = "C:/config_python/config.json"
 
-    # Cargar la URL predeterminada desde el archivo de configuración
+    # Llamar a la función para verificar la base de datos y la tabla
+    print("config_file_path: ", config_file_path)
+    #check_db_table.check_database_table_exists()
+    
     try:
         with open(config_file_path, 'r') as config_file:
             config_data = json.load(config_file)
@@ -27,10 +25,6 @@ def main():
     except FileNotFoundError:
         CSV_file = "URL predeterminada no encontrada"
 
-    # Llamar a la función para verificar la base de datos y la tabla
-    print("config_file_path: ",config_file_path)
-    #check_db_table.check_database_table_exists(config_file_path)
-    
     data = data_reader.read_csv_data(CSV_file)  # Descargar el archivo CSV desde la URL
 
     if not data:
@@ -77,4 +71,3 @@ if __name__ == "__main__":
     except Exception as e:
         print("Error en la ejecución de main.py:", e)
         sys.exit(1)
-
