@@ -2,8 +2,7 @@
 import mysql.connector
 import json
 import os
-from db import create_db, create_table
-
+import create_db, create_table
 
 def check_database_table_exists(config_path):
     connection = None  # Inicializar la variable de conexión
@@ -16,6 +15,9 @@ def check_database_table_exists(config_path):
             password = config_data.get('password', '')
             db = config_data.get('db', '')
             table = config_data.get('table', '')
+            print("host: ",host)
+            print("user: ",user)
+            print("password: ",password)
 
         # Conectar a MySQL
         connection = mysql.connector.connect(
@@ -23,6 +25,7 @@ def check_database_table_exists(config_path):
             user=user,
             password=password
         )
+        print(connection)
 
         cursor = connection.cursor()
 
@@ -54,6 +57,7 @@ def check_database_table_exists(config_path):
 if __name__ == "__main__":
     script_directory = os.path.dirname(os.path.abspath(__file__))
     config_path = os.path.join(script_directory, '..', '..', 'config', 'config.json')
+
 
     check_database_table_exists(config_path)
 

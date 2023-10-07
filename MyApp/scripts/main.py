@@ -28,9 +28,11 @@ def main():
         CSV_file = "URL predeterminada no encontrada"
 
     # Llamar a la función para verificar la base de datos y la tabla
-    check_db_table.check_database_table_exists(config_file_path)
+    print("config_file_path: ",config_file_path)
+    #check_db_table.check_database_table_exists(config_file_path)
     
     data = data_reader.read_csv_data(CSV_file)  # Descargar el archivo CSV desde la URL
+    print(data)
 
     if not data:
         print("No se pudieron leer los datos del archivo.")
@@ -63,6 +65,7 @@ def main():
 
     duration = end_time - start_time
     print(f"Duración del proceso: {duration}")
+    input("presione una tecla para salir")
 
     # Convertir end_time a cadena de texto y almacenar en config.json
     config_data['end_time'] = end_time.isoformat()

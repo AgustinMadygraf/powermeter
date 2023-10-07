@@ -1,8 +1,8 @@
 {
     "default_url": "http://panel.powermeter.com.ar/descargar/directa/inst/56ae1c10-059b-4764-abec-f7bdc5e56603/",
-    "end_time": "2023-10-05T07:51:50.191510",
+    "end_time": "2023-10-07T10:30:04.450250",
     "CSV_file": "http://panel.powermeter.com.ar/descargar/directa/inst/56ae1c10-059b-4764-abec-f7bdc5e56603/",
-    "host": "localhost",
+    "host": "192.168.0.118",
     "user": "root",
     "password": "12345678",
     "db": "powermeter",
