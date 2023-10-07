@@ -2,7 +2,7 @@
 import requests
 
 # URL del servidor donde se enviarán los datos
-server_url = 'http://192.168.0.121/powermeter/BT_A1/procesar_powermeter.php'
+server_url = 'http://localhost/powermeter/BT_A1/procesar_powermeter.php'
 
 def send_data_to_server(data):
     #print("Inicio de la función send_data_to_server")
