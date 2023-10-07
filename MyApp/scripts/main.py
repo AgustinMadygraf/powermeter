@@ -1,5 +1,4 @@
 from data import data_reader, data_validator
-from db import check_db_table
 import server_communication
 import datetime
 import json
@@ -32,7 +31,6 @@ def main():
     #check_db_table.check_database_table_exists(config_file_path)
     
     data = data_reader.read_csv_data(CSV_file)  # Descargar el archivo CSV desde la URL
-    print(data)
 
     if not data:
         print("No se pudieron leer los datos del archivo.")

@@ -15,9 +15,9 @@ def check_database_table_exists(config_path):
             password = config_data.get('password', '')
             db = config_data.get('db', '')
             table = config_data.get('table', '')
-            print("host: ",host)
-            print("user: ",user)
-            print("password: ",password)
+            sql_file = config_data.get('sql_file', '')
+            
+
 
         # Conectar a MySQL
         connection = mysql.connector.connect(
@@ -25,7 +25,6 @@ def check_database_table_exists(config_path):
             user=user,
             password=password
         )
-        print(connection)
 
         cursor = connection.cursor()
 
@@ -45,7 +44,7 @@ def check_database_table_exists(config_path):
             print(f"La tabla '{table}' existe en la base de datos '{db}'.")
         else:
             print(f"La tabla '{table}' no existe en la base de datos '{db}'.")
-            create_table.create_table_from_sql(host, user, password, db, table, "inst_bt_a1.sql")
+            create_table.create_table_from_sql(host, user, password, db, table, sql_file )
 
     except mysql.connector.Error as error:
         print(f"Error al conectar a MySQL: {error}")
