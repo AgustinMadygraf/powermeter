@@ -1,5 +1,5 @@
 <?php
-// Configuración de conexión a la base de datos
+// procesar_powermeter.php
 $servername = "localhost";
 $username = "root";
 $password = "12345678";

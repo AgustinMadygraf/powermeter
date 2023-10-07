@@ -24,3 +24,5 @@ def read_csv_data(file_url):
     except Exception as e:
         print(f"Error al procesar el archivo CSV: {str(e)}")
         return []
+    
+    

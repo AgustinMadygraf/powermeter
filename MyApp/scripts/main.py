@@ -1,3 +1,4 @@
+#main.py
 from data import data_reader, data_validator
 import server_communication
 import datetime
@@ -76,3 +77,4 @@ if __name__ == "__main__":
     except Exception as e:
         print("Error en la ejecución de main.py:", e)
         sys.exit(1)
+

@@ -22,3 +22,5 @@ def send_data_to_server(data):
     except requests.exceptions.HTTPError as e:
         print(f"Fin de la función send_data_to_server (error HTTP: {str(e)})")
         return f"Error HTTP: {str(e)}"
+    
+    
