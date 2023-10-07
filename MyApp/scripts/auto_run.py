@@ -1,3 +1,4 @@
+#auto_run.py
 from config import configjson
 import os
 import datetime
@@ -7,6 +8,7 @@ import main
 while True:
     # Obtener la ubicación del script auto_run.py
     script_directory = os.path.dirname(os.path.abspath(__file__))
+    print("script_directory: ",script_directory)
     config_data = configjson.load_config(script_directory)
 
     if config_data:

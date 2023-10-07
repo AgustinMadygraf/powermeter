@@ -1,3 +1,4 @@
+estructura de directorios y archivos
 myapp/
 ├── config/
 │   └── config.json

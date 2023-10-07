@@ -16,7 +16,7 @@ def main():
     script_directory = os.path.dirname(os.path.abspath(__file__))
     
     # Navegar desde el directorio del script hasta el directorio de configuración
-    config_directory = os.path.join(script_directory, '../config')
+    config_directory = os.path.join(script_directory, 'config')
     config_file_path = os.path.join(config_directory, 'config.json')
 
     # Cargar la URL predeterminada desde el archivo de configuración
@@ -64,7 +64,7 @@ def main():
 
     duration = end_time - start_time
     print(f"Duración del proceso: {duration}")
-    input("presione una tecla para salir")
+    #input("presione una tecla para salir")
 
     # Convertir end_time a cadena de texto y almacenar en config.json
     config_data['end_time'] = end_time.isoformat()
