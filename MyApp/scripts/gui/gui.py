@@ -1,13 +1,16 @@
-#gui_v1.py
+#gui.py
 import tkinter as tk
 from tkinter import filedialog
 import json
 import os
 import sys
+import datetime
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from data import data_reader, data_validator
 import server_communication
 import main
+
+
 
 # Crear una clase personalizada para redirigir la salida a Text widget
 class OutputRedirector:
@@ -22,11 +25,14 @@ def restore_stdout():
     sys.stdout = sys.__stdout__
 
 # Obtener la ubicación del script gui_v1.py
-script_directory = os.path.dirname(os.path.abspath(__file__))
-config_directory = os.path.abspath(os.path.join(script_directory, '../../config'))  # Retrocede dos niveles para acceder a 'config'
-config_file_path = os.path.join(config_directory, 'config.json')
-
-
+config_file_path = "C:/config_python/config.json"
+print("")
+print("-")
+print("")
+print("config_file_path: ",config_file_path)
+print("")
+print("-")
+print("")
 # Cargar la URL predeterminada desde el archivo de configuración
 try:
     with open(config_file_path, 'r') as config_file:
@@ -72,12 +78,15 @@ def enviar_datos():
         restore_stdout()
 
 def salir():
+    ubicacion_por_defecto()  
     root.destroy()
 
 root = tk.Tk()
 root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))  # Maximizar la ventana
 
 root.title("Interfaz de Envío de Datos")
+
+
 
 # Crear un Frame para los botones "Ubicación por Defecto" y "Seleccionar archivo CSV"
 botones_frame = tk.Frame(root)
@@ -117,5 +126,7 @@ respuesta_servidor.pack()
 
 boton_salir = tk.Button(root, text="Salir", command=salir)
 boton_salir.pack()
+
+ubicacion_por_defecto()  
 
 root.mainloop()

@@ -1,5 +1,4 @@
 from data import data_reader, data_validator
-#from db import check_db_table
 import server_communication
 import datetime
 import json
@@ -7,6 +6,7 @@ import sys
 
 def main():
     contador = 0
+    respuestas_consecutivas = 0  # Contador de respuestas consecutivas
 
     start_time = datetime.datetime.now()
     print(f"Inicio del proceso: {start_time}")
@@ -25,12 +25,18 @@ def main():
     except FileNotFoundError:
         CSV_file = "URL predeterminada no encontrada"
 
-    data = data_reader.read_csv_data(CSV_file)  # Descargar el archivo CSV desde la URL
+    is_URL = CSV_file.startswith('http://') or CSV_file.startswith('https://')
+
+    data = data_reader.read_csv_data(CSV_file)
 
     if not data:
         print("No se pudieron leer los datos del archivo.")
-        input("enter")
+        input("presione enter para salir")
         return
+
+    # Ordenar los datos por el campo 'timestamp' de mayor a menor si es una URL
+    if is_URL:
+        data.sort(key=lambda x: x['timestamp'], reverse=True)
 
     total = len(data)  # Obtiene el número total de filas en el archivo CSV
 
@@ -50,8 +56,20 @@ def main():
                 contador = contador + 1
                 contador_str = str(contador).zfill(4)
                 print(f"{contador_str} de {total} - Respuesta del servidor: {response}")
+                
+                # Comprobar si la respuesta indica que el registro ya existe en la base de datos
+                if response == "El registro ya existe en la base de datos.":
+                    respuestas_consecutivas += 1
+                else:
+                    respuestas_consecutivas = 0  # Restablecer el contador si la respuesta es diferente
+                
+                if respuestas_consecutivas >= 3:
+                    print("Se han recibido 3 respuestas consecutivas indicando que el registro ya existe.")
+                    break  # Salir del bucle
+                    
             except Exception as e:
                 print("Error al enviar datos al servidor:", e)
+                respuestas_consecutivas = 0  # Restablecer el contador en caso de error
 
     end_time = datetime.datetime.now()
     print(f"Fin del proceso: {end_time}")
