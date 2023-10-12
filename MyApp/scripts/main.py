@@ -22,6 +22,7 @@ def main():
         with open(config_file_path, 'r') as config_file:
             config_data = json.load(config_file)
             CSV_file = config_data.get('CSV_file', '')
+            print("CSV_file: ",CSV_file)
     except FileNotFoundError:
         CSV_file = "URL predeterminada no encontrada"
 

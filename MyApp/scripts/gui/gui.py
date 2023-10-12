@@ -26,13 +26,6 @@ def restore_stdout():
 
 # Obtener la ubicación del script gui_v1.py
 config_file_path = "C:/config_python/config.json"
-print("")
-print("-")
-print("")
-print("config_file_path: ",config_file_path)
-print("")
-print("-")
-print("")
 # Cargar la URL predeterminada desde el archivo de configuración
 try:
     with open(config_file_path, 'r') as config_file:
