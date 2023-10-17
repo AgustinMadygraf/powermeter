@@ -114,6 +114,17 @@
                         <?php } ?>
                         return data;
                     })()
+                },
+                {
+                    name: 'produccion',
+                    animation: false,
+                    data: (function () {
+                        var data = [];
+                        <?php for ($i = 15; $i < count($rawdata); $i++) { ?>
+                            data.push([<?= 1000*$rawdata[$i]["unixtime"] ?>, 440]);
+                        <?php } ?>
+                        return data;
+                    })()
                 }
             ]
         });

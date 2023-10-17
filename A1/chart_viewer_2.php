@@ -1,29 +1,4 @@
-<!--index.php -->
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Potencia eléctrica</title>
-    <!-- Librerías y estilos externos -->
-    <script src="/script.js"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <?php require 'conn.php'; ?>    <!-- Gráficos -->     
-   
-    <script> //Configuración y creación del gráfico Disponibilidad 
+<script> //Configuración y creación del gráfico Disponibilidad 
         google.charts.load('current', {'packages':['gauge']});
         google.charts.setOnLoadCallback(drawChart);
 
@@ -54,15 +29,7 @@
         var velocidadChart = new google.visualization.Gauge(document.getElementById('velocidad_chart_div'));
         velocidadChart.draw(velocidadData, velocidadOptions); }
     </script>
-    <header>
-        <?php require 'header.php'; ?> 
-    </header>
-    <nav style="position: relative;">
-        <?php require 'grafico.php'; ?>
-    </nav>
-    <br>
-    <br>
-    <br>
+    <div id="velocidad_chart_div"></div>
     <main class="flex-container">
         <section class="flex-item" >
             <p> El objetivo es democratizar la información para que la toma de decisiones sea inteligente. 
@@ -116,13 +83,5 @@
             <?php //if ($dif4_upd_csv > 120) { require 'upd_sql_all_inst2.php'; }?>
             <?php if (isset($_GET['table']) && $_GET['table'] === 'true') { require "table.php";}?>
         </section>
+        <?php echo "sql_total: ".$lalala;?>
     </main>
-    <br>
-    <br>
-    <br>
-    <br>
-    <footer>
-        <?php require "footer.php";?>
-    </footer>
-</body>
-</html>

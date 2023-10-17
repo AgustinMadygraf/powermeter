@@ -14,6 +14,9 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    
 </head>
 <body>
     <div class='topnav'>
@@ -32,6 +35,7 @@
     <?php require "dashboard.php"; ?>
     <?php require "power_info_display.php"; ?>
     <?php require "chart_viewer.php"; ?>
+    <?php require "chart_viewer_2.php"; ?>
     <title><?php echo "Pot: " . round($potinst, 1); ?> kW</title>
 </body>
 </html>

@@ -109,4 +109,22 @@ $rawdata = getArraySQL($sql);
 $costo = round($pot * 1.36 * 14.648, 2);
 $costo2 = round($pot * 1.36 * 4.702, 2);
 $CO2 = round($pot * 0.36, 2);
+
+$sql = "SELECT COUNT(*) AS total_registros FROM inst_bt_a1";
+$sql_total = getArraySQL($sql);
+$total_registros = $sql_total[0]['total_registros'];
+$horas_totales = number_format($total_registros * 5 / 60, 1);
+
+
+$sql = "SELECT COUNT(*) AS registros_mayores_440W FROM inst_bt_a1 WHERE potencia_III > 440";
+$sql_total = getArraySQL($sql);
+$registros_mayores_440W = $sql_total[0]['registros_mayores_440W'];
+$horas_prod = number_format($registros_mayores_440W * 5 / 60, 1);
+
+$sql = "SELECT COUNT(*) AS registros_menores_440W FROM inst_bt_a1 WHERE potencia_III <= 440";
+$sql_total = getArraySQL($sql);
+$registros_menores_440W = $sql_total[0]['registros_menores_440W'];
+$horas_improd = number_format($registros_menores_440W * 5 / 60, 1);
+$disp = number_format(100 * $registros_mayores_440W / $total_registros, 3);
+
 ?>
