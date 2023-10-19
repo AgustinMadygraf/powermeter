@@ -112,7 +112,7 @@
             <div id="velocidad_chart_div"></div>
         </section>
         <section class="flex-item" >
-            <?php if ($dif_upd_csv  > 900) { require 'upd_datos_csv_inst.php'; }?>
+            <?php //if ($dif_upd_csv  > 900) { require 'upd_datos_csv_inst.php'; }?>
             <?php //if ($dif4_upd_csv > 120) { require 'upd_sql_all_inst2.php'; }?>
             <?php if (isset($_GET['table']) && $_GET['table'] === 'true') { require "table.php";}?>
         </section>

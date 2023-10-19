@@ -22,6 +22,7 @@ def main():
         with open(config_file_path, 'r') as config_file:
             config_data = json.load(config_file)
             CSV_file = config_data.get('CSV_file', '')
+            print("CSV_file: ",CSV_file)
     except FileNotFoundError:
         CSV_file = "URL predeterminada no encontrada"
 
@@ -63,7 +64,7 @@ def main():
                 else:
                     respuestas_consecutivas = 0  # Restablecer el contador si la respuesta es diferente
                 
-                if respuestas_consecutivas >= 3:
+                if respuestas_consecutivas >= 3000:
                     print("Se han recibido 3 respuestas consecutivas indicando que el registro ya existe.")
                     break  # Salir del bucle
                     

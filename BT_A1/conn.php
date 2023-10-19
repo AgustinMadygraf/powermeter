@@ -117,20 +117,20 @@ $row_total = $result_total->fetch_assoc();
 $total_registros = $row_total['total_registros'];
 $horas_totales = number_format($total_registros * 5 / 60, 1);
 
-// Consulta para contar los registros mayores a 560W
-$sql_mayores_560W = "SELECT COUNT(*) AS registros_mayores_560W FROM inst_bt_a1 WHERE potencia_III > 560";
-$result_mayores_560W = $conn->query($sql_mayores_560W);
-$row_mayores_560W = $result_mayores_560W->fetch_assoc();
-$registros_mayores_560W = $row_mayores_560W['registros_mayores_560W'];
-$horas_prod = number_format($registros_mayores_560W * 5 / 60, 1);
+// Consulta para contar los registros mayores a 440W
+$sql_mayores_440W = "SELECT COUNT(*) AS registros_mayores_440W FROM inst_bt_a1 WHERE potencia_III > 440";
+$result_mayores_440W = $conn->query($sql_mayores_440W);
+$row_mayores_440W = $result_mayores_440W->fetch_assoc();
+$registros_mayores_440W = $row_mayores_440W['registros_mayores_440W'];
+$horas_prod = number_format($registros_mayores_440W * 5 / 60, 1);
 
-// Consulta para contar los registros menores a 560W
-$sql_menores_560W = "SELECT COUNT(*) AS registros_menores_560W FROM inst_bt_a1 WHERE potencia_III <= 560";
-$result_menores_560W = $conn->query($sql_menores_560W);
-$row_menores_560W = $result_menores_560W->fetch_assoc();
-$registros_menores_560W = $row_menores_560W['registros_menores_560W'];
-$horas_improd = number_format($registros_menores_560W * 5 / 60, 1);
-$disp = number_format(100 * $registros_mayores_560W / $total_registros, 3);
+// Consulta para contar los registros menores a 440W
+$sql_menores_440W = "SELECT COUNT(*) AS registros_menores_440W FROM inst_bt_a1 WHERE potencia_III <= 440";
+$result_menores_440W = $conn->query($sql_menores_440W);
+$row_menores_440W = $result_menores_440W->fetch_assoc();
+$registros_menores_440W = $row_menores_440W['registros_menores_440W'];
+$horas_improd = number_format($registros_menores_440W * 5 / 60, 1);
+$disp = number_format(100 * $registros_mayores_440W / $total_registros, 3);
 
 // Cerrar la conexión
 $conn->close();
