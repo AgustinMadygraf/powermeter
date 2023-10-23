@@ -80,7 +80,8 @@
                 type: 'datetime',
                 tickPixelInterval: 1
             },
-            yAxis: {
+            yAxis: {    
+                type: 'logarithmic', // Establece el eje vertical como logarítmico
                 title: {
                     text: '[Watts]'
                 },

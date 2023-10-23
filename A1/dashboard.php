@@ -6,11 +6,11 @@ $segundos = 60;   // Refrescar cada 60 segundos
 
 
 // Variable que registra qué período de tiempo mostrar por defecto
-$periodo = 'turno';
-$ls_periodos = ['semana' => 604800, 'turno' => 28800, 'hora' => 3600];
-$ls_class = ['semana' => [1, 0, 0], 'turno' => [0, 1, 0], 'hora' => [0, 0, 1]];
+$periodo = 'semana';
+$ls_periodos = ['mes' => 2419200, 'semana' => 604800, 'turno' => 28800];
+$ls_class = ['mes' => [1, 0, 0], 'semana' => [0, 1, 0], 'turno' => [0, 0, 1]];
 $ref_class = ['presione', 'presado'];
-$menos_periodo = ['semana' => 'turno', 'turno' => 'hora', 'hora' => 'hora'];
+$menos_periodo = ['mes' => 'semana', 'semana' => 'turno', 'turno' => 'turno'];
 
 // Comprobar si se cambió el período a través de GET
 if ($_GET && array_key_exists("periodo", $_GET)) {
@@ -93,37 +93,88 @@ if ($_GET && array_key_exists("conta", $_GET)) {
         $conta = $valorInicial;
     }
 }
-$tiempo1 = $conta/1000; 
-$tiempo1 = $tiempo1- $ls_periodos[$periodo] - 80*60;
+
+$tiempo1 = ($conta/1000) - $ls_periodos[$periodo] - 80*60;
 $tiempo2 = $conta/1000 ;
-//$tiempo2 = $tiempo2 + 4*5*60; 
-$sql = "SELECT `unixtime`, `potencia_III`  from `inst_bt_a1` WHERE  unixtime > " . $tiempo1 . " and unixtime <= " . $tiempo2 . " ORDER BY `unixtime` ASC ;";
+$sql = "SELECT `unixtime`, `potencia_III`  from `inst_bt_a1` WHERE  unixtime > " . $tiempo1 . " AND unixtime <= " . $tiempo2 . " ORDER BY `unixtime` ASC ;";
 $rawdata = getArraySQL($sql);
-echo "tiempo1: ".$tiempo1."<br>";
-echo "tiempo2: ".$tiempo2."<br>";
-echo "ls_periodos[$periodo]: ".$ls_periodos[$periodo]."<br>";
+
+$tiempo1_mes    = ($conta/1000) - $ls_periodos['mes']   ;
+$tiempo1_semana = ($conta/1000) - $ls_periodos['semana'];
+$tiempo1_turno  = ($conta/1000) - $ls_periodos['turno'] ;
 
 
 
-$costo = round($pot * 1.36 * 14.648, 2);
-$costo2 = round($pot * 1.36 * 4.702, 2);
-$CO2 = round($pot * 0.36, 2);
 
-$sql = "SELECT COUNT(*) AS total_registros FROM inst_bt_a1";
+
+$sql = "SELECT COUNT(*) AS registros_mayores_440W_mes FROM inst_bt_a1 WHERE unixtime > " . $tiempo1_mes . " AND unixtime <= " . $tiempo2 . " AND potencia_III > 440";
+//$sql = "SELECT COUNT(*) AS registros_mayores_440W FROM inst_bt_a1 WHERE potencia_III > 440";
 $sql_total = getArraySQL($sql);
-$total_registros = $sql_total[0]['total_registros'];
-$horas_totales = number_format($total_registros * 5 / 60, 1);
+$registros_mayores_440W_mes = $sql_total[0]['registros_mayores_440W_mes'];
+$horas_operativas_mes = floor($registros_mayores_440W_mes * 5 / 60); // Obtener las horas completas
+$minutos_operativas_mes = ($registros_mayores_440W_mes * 5) % 60; // Obtener los minutos restantes
 
-
-$sql = "SELECT COUNT(*) AS registros_mayores_440W FROM inst_bt_a1 WHERE potencia_III > 440";
+$sql = "SELECT COUNT(*) AS registros_menores_440W_mes FROM inst_bt_a1 WHERE unixtime > " . $tiempo1_mes . " AND unixtime <= " . $tiempo2 . " AND potencia_III <= 440";
 $sql_total = getArraySQL($sql);
-$registros_mayores_440W = $sql_total[0]['registros_mayores_440W'];
-$horas_prod = number_format($registros_mayores_440W * 5 / 60, 1);
+$registros_menores_440W_mes = $sql_total[0]['registros_menores_440W_mes'];
+$horas_parada_mes = floor($registros_menores_440W_mes * 5 / 60); // Obtener las horas completas
+$minutos_parada_mes = ($registros_menores_440W_mes * 5) % 60; // Obtener los minutos restantes
 
-$sql = "SELECT COUNT(*) AS registros_menores_440W FROM inst_bt_a1 WHERE potencia_III <= 440";
+$horas_mes = floor(($registros_menores_440W_mes + $registros_mayores_440W_mes) *5 / 60);
+$minutos_mes = ($registros_menores_440W_mes + $registros_mayores_440W_mes * 5) % 60;
+$disp_mes = number_format(100 * $registros_mayores_440W_mes / ($registros_mayores_440W_mes + $registros_menores_440W_mes), 1);
+
+
+
+
+
+
+$sql = "SELECT COUNT(*) AS registros_mayores_440W_semana FROM inst_bt_a1 WHERE unixtime > " . $tiempo1_semana . " AND unixtime <= " . $tiempo2 . " AND potencia_III > 440";
+//$sql = "SELECT COUNT(*) AS registros_mayores_440W FROM inst_bt_a1 WHERE potencia_III > 440";
 $sql_total = getArraySQL($sql);
-$registros_menores_440W = $sql_total[0]['registros_menores_440W'];
-$horas_improd = number_format($registros_menores_440W * 5 / 60, 1);
-$disp = number_format(100 * $registros_mayores_440W / $total_registros, 3);
+$registros_mayores_440W_semana = $sql_total[0]['registros_mayores_440W_semana'];
+$horas_operativas_semana = floor($registros_mayores_440W_mes * 5 / 60); // Obtener las horas completas
+$minutos_operativas_semana = ($registros_mayores_440W_mes * 5) % 60; // Obtener los minutos restantes
+
+$sql = "SELECT COUNT(*) AS registros_menores_440W_semana FROM inst_bt_a1 WHERE unixtime > " . $tiempo1_semana . " AND unixtime <= " . $tiempo2 . " AND potencia_III <= 440";
+$sql_total = getArraySQL($sql);
+$registros_menores_440W_semana = $sql_total[0]['registros_menores_440W_semana'];
+$horas_parada_semana = floor($registros_menores_440W_semana * 5 / 60); // Obtener las horas completas
+$minutos_parada_semana = ($registros_menores_440W_semana * 5) % 60; // Obtener los minutos restantes
+
+$horas_semana = floor(($registros_menores_440W_semana + $registros_mayores_440W_semana ) *5 / 60);
+$minutos_semana = ($registros_menores_440W_semana + $registros_mayores_440W_semana * 5) % 60;
+$disp_semana = number_format(100 * $registros_mayores_440W_semana / ($registros_mayores_440W_semana + $registros_menores_440W_semana), 1);
+
+
+
+
+
+
+$sql = "SELECT COUNT(*) AS registros_mayores_440W_turno FROM inst_bt_a1 WHERE unixtime > " . $tiempo1_turno . " AND unixtime <= " . $tiempo2 . " AND potencia_III > 440";
+//$sql = "SELECT COUNT(*) AS registros_mayores_440W FROM inst_bt_a1 WHERE potencia_III > 440";
+$sql_total = getArraySQL($sql);
+$registros_mayores_440W_turno = $sql_total[0]['registros_mayores_440W_turno'];
+$horas_operativas_turno = floor($registros_mayores_440W_turno * 5 / 60); // Obtener las horas completas
+$minutos_operativas_turno = ($registros_mayores_440W_turno * 5) % 60; // Obtener los minutos restantes
+
+$sql = "SELECT COUNT(*) AS registros_menores_440W_turno FROM inst_bt_a1 WHERE unixtime > " . $tiempo1_turno . " AND unixtime <= " . $tiempo2 . " AND potencia_III <= 440";
+$sql_total = getArraySQL($sql);
+$registros_menores_440W_turno = $sql_total[0]['registros_menores_440W_turno'];
+$horas_parada_turno = floor($registros_menores_440W_turno * 5 / 60);
+$minutos_parada_turno = ($registros_menores_440W_turno * 5) % 60; // Obtener los minutos restantes
+
+$horas_turno = floor(($registros_menores_440W_turno + $registros_mayores_440W_turno) *5 / 60);
+$minutos_turno = ($registros_menores_440W_turno + $registros_mayores_440W_turno * 5) % 60;
+$disp_turno = number_format(100 * $registros_mayores_440W_turno / ($registros_mayores_440W_turno + $registros_menores_440W_turno), 1);
+
+
+
+
+
+
+
+
+
 
 ?>
