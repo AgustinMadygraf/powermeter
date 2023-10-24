@@ -4,7 +4,7 @@ import pymysql
 import minimalmodbus
 
 # Puerto serie COM3 (ajusta el puerto según tu configuración)
-com_port = 'COM4'
+com_port = 'COM5'
 
 # Dirección del dispositivo Modbus (ajusta la dirección del dispositivo según tu configuración)
 device_address = 1

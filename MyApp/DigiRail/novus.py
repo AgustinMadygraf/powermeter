@@ -1,10 +1,9 @@
-<<<<<<< HEAD:MyApp/DigiRail Connect/novus.py
 from pymodbus.client import ModbusSerialClient
 import schedule
 import time
 
 # Puerto serie (ajusta el puerto según tu configuración)
-serial_port = 'COM13'  # Puerto COM13, ajústalo según tu configuración
+serial_port = 'COM5'  # Puerto COM13, ajústalo según tu configuración
 
 # Dirección del dispositivo Modbus (ajusta la dirección del dispositivo según tu configuración)
 device_address = 1
@@ -58,7 +57,7 @@ while True:
     schedule.run_pending()
     time.sleep(1)
 
-=======
+
 import minimalmodbus
 
 # Puerto serie COM3 (ajusta el puerto según tu configuración)
@@ -85,7 +84,7 @@ def check_connection(port, address):
 def read_digital_input(instrument, address):
     if instrument:
         try:
-            result = instrument.read_bit(address, functioncode=2)  # Utiliza la función 2 para leer bits
+            result = instrument.read_bit(address)  # Leer un solo bit
             return result
         except Exception as e:
             print(f"Error al leer entrada digital: {e}")
@@ -97,4 +96,3 @@ if __name__ == '__main__':
         input_state = read_digital_input(instrument, input_register_address)
         if input_state is not None:
             print(f"Estado de la entrada digital en registro {input_register_address}: {input_state}")
->>>>>>> 711791ce046cf09dc8a2b32dface593a10e854c3:MyApp/DigiRail/novus.py
