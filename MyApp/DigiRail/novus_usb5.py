@@ -1,8 +1,8 @@
-import schedule
-import time
 import pymysql
 import minimalmodbus
 import serial.tools.list_ports
+import time
+import sys
 
 def detect_serial_ports(device_description):
     available_ports = list(serial.tools.list_ports.comports())
@@ -14,25 +14,24 @@ def detect_serial_ports(device_description):
 device_description = "DigiRail Connect"  # Modifica esto según la descripción de tu dispositivo
 com_port = detect_serial_ports(device_description)
 
-
 if com_port:
-    print(f"Puerto detectado: {com_port}")
+    print(f"Puerto detectado: {com_port}\n")
+    input("Presione una tecla para continuar")
 else:
     print("No se detectaron puertos COM para tu dispositivo.")
-
-#com_port = 'COM5'
+    input ("Presiona una tecla para salir")
+    exit
 
 # Dirección del dispositivo Modbus (ajusta la dirección del dispositivo según tu configuración)
 device_address = 1
 
-# Direcciones de los registros que deseas leer (ajusta esto según tus necesidades)
 # Entradas digitales
 D1 = 70
 D2 = 71
 D3 = 72
 D4 = 73
 
-# Nuevas direcciones de registros (del 22 al 29)
+# Contador
 HR_COUNTER1_LO = 22
 HR_COUNTER1_HI = 23
 HR_COUNTER2_LO = 24
@@ -92,11 +91,13 @@ def update_database(connection, address, value):
         except Exception as e:
             print(f"Error al actualizar el registro en la base de datos: {e}")
 
-# Función para programar la lectura y actualización de registros cada 1 segundo
-def schedule_read_and_update():
+while True:
+    sys.stdout.write("\033[H\033[J")
+
+    # Realiza tus operaciones de lectura y actualización aquí.
     connection = check_db_connection()
     instrument = minimalmodbus.Instrument(com_port, device_address)
-    
+
     if connection:
         D1_state = read_digital_input(instrument, D1)
         D2_state = read_digital_input(instrument, D2)
@@ -109,31 +110,25 @@ def schedule_read_and_update():
         HR_COUNTER4_lo, HR_COUNTER4_hi = read_high_resolution_register(instrument, HR_COUNTER4_LO, HR_COUNTER4_HI)
 
         if D1_state is not None:
-            update_database(connection, 70, D1_state)
+            update_database(connection, D1, D1_state)
         if D2_state is not None:
-            update_database(connection, 71, D2_state)
+            update_database(connection, D2, D2_state)
         if D3_state is not None:
-            update_database(connection, 72, D3_state)
+            update_database(connection, D3, D3_state)
         if D4_state is not None:
-            update_database(connection, 73, D4_state)
-        
+            update_database(connection, D4, D4_state)
+
         if HR_COUNTER1_lo is not None and HR_COUNTER1_hi is not None:
-            update_database(connection, 22, HR_COUNTER1_lo)
-            update_database(connection, 23, HR_COUNTER1_hi)
+            update_database(connection, HR_COUNTER1_LO, HR_COUNTER1_lo)
+            update_database(connection, HR_COUNTER1_HI, HR_COUNTER1_hi)
         if HR_COUNTER2_lo is not None and HR_COUNTER2_hi is not None:
-            update_database(connection, 24, HR_COUNTER2_lo)
-            update_database(connection, 25, HR_COUNTER2_hi)
+            update_database(connection, HR_COUNTER2_LO, HR_COUNTER2_lo)
+            update_database(connection, HR_COUNTER2_HI, HR_COUNTER2_hi)
         if HR_COUNTER3_lo is not None and HR_COUNTER3_hi is not None:
-            update_database(connection, 26, HR_COUNTER3_lo)
-            update_database(connection, 27, HR_COUNTER3_hi)
+            update_database(connection, HR_COUNTER3_LO, HR_COUNTER3_lo)
+            update_database(connection, HR_COUNTER3_HI, HR_COUNTER3_hi)
         if HR_COUNTER4_lo is not None and HR_COUNTER4_hi is not None:
-            update_database(connection, 28, HR_COUNTER4_lo)
-            update_database(connection, 29, HR_COUNTER4_hi)
-
-# Programar la lectura y actualización de registros cada 1 segundo
-schedule.every(1).seconds.do(schedule_read_and_update)
-
-while True:
-    schedule.run_pending()
+            update_database(connection, HR_COUNTER4_LO, HR_COUNTER4_lo)
+            update_database(connection, HR_COUNTER4_HI, HR_COUNTER4_hi)
+    
     time.sleep(1)
-    print("")

@@ -1,8 +1,7 @@
-import schedule
-import time
 import pymysql
 import minimalmodbus
 import serial.tools.list_ports
+import time
 
 def detect_serial_ports(device_description):
     available_ports = list(serial.tools.list_ports.comports())
@@ -14,25 +13,24 @@ def detect_serial_ports(device_description):
 device_description = "DigiRail Connect"  # Modifica esto según la descripción de tu dispositivo
 com_port = detect_serial_ports(device_description)
 
-
 if com_port:
     print(f"Puerto detectado: {com_port}")
+    print("")
 else:
     print("No se detectaron puertos COM para tu dispositivo.")
-
-#com_port = 'COM5'
+    input ("presione una tecla para salir")
+    exit
 
 # Dirección del dispositivo Modbus (ajusta la dirección del dispositivo según tu configuración)
 device_address = 1
 
-# Direcciones de los registros que deseas leer (ajusta esto según tus necesidades)
 # Entradas digitales
 D1 = 70
 D2 = 71
 D3 = 72
 D4 = 73
 
-# Nuevas direcciones de registros (del 22 al 29)
+# Contador
 HR_COUNTER1_LO = 22
 HR_COUNTER1_HI = 23
 HR_COUNTER2_LO = 24
@@ -92,11 +90,13 @@ def update_database(connection, address, value):
         except Exception as e:
             print(f"Error al actualizar el registro en la base de datos: {e}")
 
-# Función para programar la lectura y actualización de registros cada 1 segundo
-def schedule_read_and_update():
+
+
+while True:
+    # Realiza tus operaciones de lectura y actualización aquí.
     connection = check_db_connection()
     instrument = minimalmodbus.Instrument(com_port, device_address)
-    
+
     if connection:
         D1_state = read_digital_input(instrument, D1)
         D2_state = read_digital_input(instrument, D2)
@@ -116,7 +116,7 @@ def schedule_read_and_update():
             update_database(connection, 72, D3_state)
         if D4_state is not None:
             update_database(connection, 73, D4_state)
-        
+
         if HR_COUNTER1_lo is not None and HR_COUNTER1_hi is not None:
             update_database(connection, 22, HR_COUNTER1_lo)
             update_database(connection, 23, HR_COUNTER1_hi)
@@ -130,10 +130,6 @@ def schedule_read_and_update():
             update_database(connection, 28, HR_COUNTER4_lo)
             update_database(connection, 29, HR_COUNTER4_hi)
 
-# Programar la lectura y actualización de registros cada 1 segundo
-schedule.every(1).seconds.do(schedule_read_and_update)
 
-while True:
-    schedule.run_pending()
+    # Por ejemplo, aquí, el código se ejecutará aproximadamente cada 1 segundo.
     time.sleep(1)
-    print("")
