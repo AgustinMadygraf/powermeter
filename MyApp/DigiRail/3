@@ -1,0 +1,16 @@
+import serial.tools.list_ports
+
+def detect_serial_ports(device_description):
+    available_ports = list(serial.tools.list_ports.comports())
+    for port, desc, hwid in available_ports:
+        if device_description in desc:
+            return port
+    return None
+
+device_description = "DigiRail Connect"  # Modifica esto según la descripción de tu dispositivo
+com_port = detect_serial_ports(device_description)
+
+if com_port:
+    print(f"El puerto COM detectado: {com_port}")
+else:
+    print("No se detectaron puertos COM para tu dispositivo.")
