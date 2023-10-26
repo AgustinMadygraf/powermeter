@@ -132,4 +132,4 @@ while True:
 
 
     # Por ejemplo, aquí, el código se ejecutará aproximadamente cada 1 segundo.
-    time.sleep(1)
+    time.sleep(60)

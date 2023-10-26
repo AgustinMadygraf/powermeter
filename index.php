@@ -1,5 +1,5 @@
 <script>
     // Redireccionar a una nueva página
-    window.location.replace("BT_A1/");
+    window.location.replace("A1/");
 
 </script>
