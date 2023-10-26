@@ -1,3 +1,4 @@
+#novus_usb.py
 import pymysql
 import minimalmodbus
 import serial.tools.list_ports
@@ -25,15 +26,8 @@ else:
     else:
         print("No se detectaron puertos COM para tu dispositivo.")
         input ("Presiona una tecla para salir")
-        exit
+        exit()
 
-print("inicio del programa en 3")
-time.sleep(1)
-print("inicio del programa en 2")
-time.sleep(1)
-print("inicio del programa en 1")
-time.sleep(1)
-print("inicio del programa en 0")
 time.sleep(1)
 
 # Dirección del dispositivo Modbus (ajusta la dirección del dispositivo según tu configuración)
