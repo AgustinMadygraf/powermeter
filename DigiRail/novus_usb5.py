@@ -94,17 +94,23 @@ while True:
 
     # Realiza tus operaciones de lectura y actualización aquí.
     connection = check_db_connection()
-    instrument = minimalmodbus.Instrument(com_port, device_address)
+    
+    try:
+        instrument = minimalmodbus.Instrument(com_port, device_address)
+    except Exception as e:
+        print("Error al configurar el puerto serie:", str(e))
+        time.sleep(10)
+        continue
 
     if connection:
         D1_state = read_digital_input(instrument, D1)
         HR_COUNTER1_lo, HR_COUNTER1_hi = read_high_resolution_register(instrument, HR_COUNTER1_LO, HR_COUNTER1_HI)
 
         if D1_state is not None:
-            update_database(connection, D1, D1_state,descripcion="HR_INPUT1_STATE")
+            update_database(connection, D1, D1_state, descripcion="HR_INPUT1_STATE")
 
         if HR_COUNTER1_lo is not None and HR_COUNTER1_hi is not None:
-            update_database(connection, HR_COUNTER1_LO, HR_COUNTER1_lo,descripcion="HR_COUNTER1_LO ")
-            update_database(connection, HR_COUNTER1_HI, HR_COUNTER1_hi,descripcion="HR_COUNTER1_HI ")
-    
+            update_database(connection, HR_COUNTER1_LO, HR_COUNTER1_lo, descripcion="HR_COUNTER1_LO ")
+            update_database(connection, HR_COUNTER1_HI, HR_COUNTER1_hi, descripcion="HR_COUNTER1_HI ")
+
     time.sleep(1)
