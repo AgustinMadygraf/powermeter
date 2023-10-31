@@ -99,7 +99,7 @@ while True:
         instrument = minimalmodbus.Instrument(com_port, device_address)
     except Exception as e:
         print("Error al configurar el puerto serie:", str(e))
-        time.sleep(10)
+        time.sleep(60)
         continue
 
     if connection:
