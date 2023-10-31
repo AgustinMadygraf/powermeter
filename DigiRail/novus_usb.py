@@ -97,7 +97,7 @@ def insert_database(connection, fecha_ahora, HR_COUNTER1):
                 sql = f"INSERT INTO `maq_bolsas`( `unixtime`, `HR_COUNTER1`) VALUES ({fecha_ahora}, {HR_COUNTER1})"
                 cursor.execute(sql)
                 connection.commit()
-                print(f"Registro Insertado: unixtime = {fecha_ahora}, HR_COUNTER1= {HR_COUNTER1} ")
+                print(f"Registro Insertado: unixtime = {fecha_ahora}, HR_COUNTER1= {HR_COUNTER1} , timestamp = {datetime.fromtimestamp(fecha_ahora)}")
         except Exception as e:
             print(f"Error al insertar el registro en la base de datos: {e}")
 
@@ -116,8 +116,8 @@ while True:
     if connection:
         D1_state = read_digital_input(instrument, D1)
         HR_COUNTER1_lo, HR_COUNTER1_hi = read_high_resolution_register(instrument, HR_COUNTER1_LO, HR_COUNTER1_HI)
-        HR_COUNTER1 = HR_COUNTER1_lo + HR_COUNTER1_hi
-
+        if HR_COUNTER1_lo is not None and HR_COUNTER1_hi is not None:
+            HR_COUNTER1 = HR_COUNTER1_lo + HR_COUNTER1_hi * 65536
         print(f"Puerto {device_description} detectado: {com_port}\n")
 
 
@@ -127,20 +127,22 @@ while True:
         if HR_COUNTER1_lo is not None and HR_COUNTER1_hi is not None:
             update_database(connection, HR_COUNTER1_LO, HR_COUNTER1_lo, descripcion="HR_COUNTER1_LO ")
             update_database(connection, HR_COUNTER1_HI, HR_COUNTER1_hi, descripcion="HR_COUNTER1_HI ")
-        fecha_ahora = time.time()
-        print(f"la hora es: {datetime.now()}")
-        fecha_sig = datetime.utcfromtimestamp(((time.time()/300 + 1) // 1) * 300)
-        print(f"Próxima actualización a las {fecha_sig}")
-        seg = ((fecha_sig - datetime.utcfromtimestamp(fecha_ahora)).total_seconds()) 
-        seg_truncado = round(seg,1)
+        fecha_ahora = int(time.time())
+        print(f"la hora es: {datetime.fromtimestamp(fecha_ahora)}")
+        fecha_sig = ((int(time.time()) // 300 + 1) * 300)
+        fecha_sig_formateada = datetime.fromtimestamp(fecha_sig)
+        print(f"Próxima actualización a las {fecha_sig_formateada}")
+        seg = fecha_sig - fecha_ahora
+        seg_truncado = round(seg, 1)
         print(f"Tiempo para la siguiente actualización: {seg_truncado} segundos")
-        #seg = 0 #
+        fecha_ahora = round(fecha_ahora/300,1)*300
 
-    if seg < 11:
+
+    if seg < 2:
         try:
             insert_database(connection, fecha_ahora, HR_COUNTER1)
-            time.sleep(10)
+            time.sleep(15)
         except Exception as e:  
             print("Error al insertar en la base de datos:", e)
 
-    time.sleep(10)
+    time.sleep(1)
