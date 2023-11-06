@@ -1,0 +1,19 @@
+import os
+from prettytable import PrettyTable
+
+# Determinar el ancho de la terminal
+terminal_width = os.get_terminal_size().columns
+
+# Configurar la tabla con un ancho máximo
+table = PrettyTable()
+table.field_names = ["Field", "Value"]
+table.add_row(["Some field", "Some very very long value that normally would not fit on screen"])
+table.max_table_width = terminal_width  # Ajusta el ancho máximo de la tabla al ancho de la terminal
+
+# Ajustar el ancho de la columna individual si es necesario
+# Esto se puede hacer iterando y ajustando según el contenido
+for column in table.field_names:
+    max_column_width = terminal_width // len(table.field_names)  # Divide equitativamente el ancho entre las columnas
+    table.max_width[column] = max_column_width
+
+print(table)

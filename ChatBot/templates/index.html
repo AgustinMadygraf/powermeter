@@ -1,0 +1,42 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot de Asistencia Técnica</title>
+    <!-- Agrega aquí tu CSS y otros archivos de cabecera necesarios -->
+</head>
+<body>
+    <div id="chat-container">
+        <!-- Mensajes del chat aquí -->
+        <div id="chat-box">
+            <!-- Los mensajes se añadirán aquí dinámicamente -->
+        </div>
+        
+        <!-- Entrada del usuario -->
+        <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí...">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+    
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            
+            // Limpia el campo de entrada
+            document.getElementById("user-input").value = '';
+            
+            // Añade el mensaje del usuario al chat
+            document.getElementById("chat-box").innerHTML += '<div class="user-message">' + userInput + '</div>';
+            
+            // Hacer una solicitud a /get ruta en app.py
+            fetch(`/get?msg=${userInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Añade la respuesta del bot al chat
+                    document.getElementById("chat-box").innerHTML += '<div class="bot-message">' + data + '</div>';
+                })
+                .catch(e => console.error(e));
+        }
+    </script>
+</body>
+</html>
