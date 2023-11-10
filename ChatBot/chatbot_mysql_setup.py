@@ -22,19 +22,19 @@ chatbot = ChatBot(
     
 
 os.system('cls')
-#print("MadyBot: ¿En qué puedo ayudarte?")
-#while True:
-#    try:
-#        user_input = input("Usuario: ")
-#
-#        if user_input:  # Verificar que 'user_input' no esté vacío.
-#            bot_response = chatbot.get_response(user_input)  # Obtener la respuesta del bot.
-#        else:
-#            bot_response = chatbot.get_response("[null]")  # Obtener la respuesta del bot.
-#       
-#        print(F"Madybot: {bot_response}")  # Imprimir la respuesta.
+print("MadyBot: ¿En qué puedo ayudarte?")
+while True:
+    try:
+        user_input = input("Usuario: ")
+
+        if user_input:  # Verificar que 'user_input' no esté vacío.
+            bot_response = chatbot.get_response(user_input)  # Obtener la respuesta del bot.
+        else:
+            bot_response = chatbot.get_response("[null]")  # Obtener la respuesta del bot.
+       
+        print(F"Madybot: {bot_response}")  # Imprimir la respuesta.
 
 
     # Press ctrl-c or ctrl-d on the keyboard to exit
-#    except (KeyboardInterrupt, EOFError, SystemExit):
-#        break
+    except (KeyboardInterrupt, EOFError, SystemExit):
+        break

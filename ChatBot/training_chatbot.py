@@ -1,4 +1,4 @@
-print("Inicializando...")
+#training_chatbot.py
 from chatterbot import ChatBot
 import mysql.connector
 import json

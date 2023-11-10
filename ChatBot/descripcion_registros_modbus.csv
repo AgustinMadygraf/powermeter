@@ -1,0 +1,8 @@
+Field,Type,Null,Key,Default,Extra
+ID,b'int(11)',NO,PRI,,auto_increment
+direccion_modbus,b'int(11)',NO,,,
+registro,b'varchar(100)',YES,,,
+descripcion,b'text',YES,,,
+rw,b'varchar(5)',YES,,,
+acceso,b'varchar(20)',YES,,,
+valor,b'text',YES,,,

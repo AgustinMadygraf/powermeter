@@ -1,0 +1,12 @@
+Field,Type,Null,Key,Default,Extra
+id,b'int(11)',NO,PRI,,auto_increment
+unixtime,b'int(16)',NO,,,
+potencia_r,b'float',NO,,,
+potencia_s,b'float',NO,,,
+potencia_t,b'float',NO,,,
+potencia_III,b'float',YES,,,VIRTUAL GENERATED
+datetime,b'datetime',YES,,,VIRTUAL GENERATED
+dia,b'int(11)',YES,,,VIRTUAL GENERATED
+v_r,b'float',NO,,,
+v_s,b'float',NO,,,
+v_t,b'float',NO,,,

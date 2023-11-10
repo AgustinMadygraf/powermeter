@@ -1,0 +1,4 @@
+Field,Type,Null,Key,Default,Extra
+ID,b'int(11)',NO,PRI,,auto_increment
+unixtime,b'int(11)',NO,,,
+HR_COUNTER1,b'int(11)',NO,,,
