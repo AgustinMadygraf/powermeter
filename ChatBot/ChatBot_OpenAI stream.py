@@ -1,24 +1,27 @@
 print("Inicializando...")
-
 import os
+os.system('cls' if os.name == 'nt' else 'clear')
 import openai
 
-# Limpiar la pantalla de la terminal antes de comenzar (funciona en Windows).
-os.system('cls' if os.name == 'nt' else 'clear')
 
 
-# Función para obtener la API key de un archivo.
-def get_api_key(file_path):
-    print(f"Leyendo API key desde {file_path}...")
-    with open(file_path, 'r') as file:
-        return file.readline().strip()
+def obtener_api_key(file_path_API_key):
+    try:
+        print(f"Leyendo API key desde {file_path_API_key}...")
+        with open(file_path_API_key, 'r') as file:
+            return file.readline().strip()
+    except FileNotFoundError:
+        print(f"No se encontró el archivo: {file_path_API_key}. Por favor verifica la ruta.")
+        print("Escribe 'exit' para salir o presiona cualquier tecla para continuar.")
+        decision = input()
+        return None if decision.lower() == 'exit' else "continuar"
 
-api_key_path = "path_al_archivo_con_tu_clave.txt"
-openai.api_key = get_api_key(api_key_path)
 
-chat_history = [({"role": "user", "content": """Quiero que te comportes como un Profesor en electrónica orientado en mantenimiento industrial. Quiero que le hables a los alumnos 
-                  cuyo objetivo es motivarlos para que exploren el fascinante muundo de las nuevas tecologías.Por favor no proporciones 
-                  respuestas muy largos porque los alumnos van a perder la antención. y siempre termina con una pregunta para los alumnos, otros profesores, preceptores y/o directivos"""})]
+api_key_path = "C://API_key.txt"
+clave_api = obtener_api_key(api_key_path)
+openai.api_key = clave_api
+
+chat_history = [({"role": "user", "content": "Quiero que te comportes como un profesor de electrónica" })]
 
 
 
