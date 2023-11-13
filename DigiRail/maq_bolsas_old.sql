@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-11-2023 a las 17:03:58
+-- Tiempo de generación: 31-10-2023 a las 19:42:24
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -31,8 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `maq_bolsas` (
   `ID` int(11) NOT NULL,
   `unixtime` int(11) NOT NULL,
-  `HR_COUNTER1` int(11) NOT NULL,
-  `datetime` datetime GENERATED ALWAYS AS (from_unixtime(`unixtime`)) VIRTUAL
+  `HR_COUNTER1` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --

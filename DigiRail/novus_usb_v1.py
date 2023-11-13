@@ -35,9 +35,12 @@ device_address = 1
 
 # Entradas digitales
 D1 = 70
+D2 = 71
 # Contador
 HR_COUNTER1_LO = 22
 HR_COUNTER1_HI = 23
+HR_COUNTER2_LO = 24
+HR_COUNTER2_HI = 25
 
 # Configuración de la base de datos MySQL
 db_config = {
@@ -128,7 +131,7 @@ while True:
             update_database(connection, HR_COUNTER1_LO, HR_COUNTER1_lo, descripcion="HR_COUNTER1_LO ")
             update_database(connection, HR_COUNTER1_HI, HR_COUNTER1_hi, descripcion="HR_COUNTER1_HI ")
         fecha_ahora = int(time.time())
-        print(f"la hora es                  {datetime.fromtimestamp(fecha_ahora)}")
+        print(f"la hora es: {datetime.fromtimestamp(fecha_ahora)}")
         fecha_sig = ((int(time.time()) // 300 + 1) * 300)
         fecha_sig_formateada = datetime.fromtimestamp(fecha_sig)
         print(f"Próxima actualización a las {fecha_sig_formateada}")
