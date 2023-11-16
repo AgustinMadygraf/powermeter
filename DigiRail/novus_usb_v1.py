@@ -130,6 +130,7 @@ while True:
         if HR_COUNTER1_lo is not None and HR_COUNTER1_hi is not None:
             update_database(connection, HR_COUNTER1_LO, HR_COUNTER1_lo, descripcion="HR_COUNTER1_LO ")
             update_database(connection, HR_COUNTER1_HI, HR_COUNTER1_hi, descripcion="HR_COUNTER1_HI ")
+            
         fecha_ahora = int(time.time())
         print(f"la hora es: {datetime.fromtimestamp(fecha_ahora)}")
         fecha_sig = ((int(time.time()) // 300 + 1) * 300)
