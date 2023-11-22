@@ -128,7 +128,7 @@ print("Inicializando...")
 # Uso de la función
 carpeta = os.getcwd()  # Obtiene la ubicación actual del script
 archivos_dict = imprimir_archivos_json(carpeta)
-1
+
 print("Presione el NÚMERO de la opción que desea seleccionar")
 while True:
     cgn = input()
