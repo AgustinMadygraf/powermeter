@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta de Producción</title>
+    <!-- Agrega aquí cualquier estilo o librería que necesites -->
+    <script>
+        function obtenerFechaHoraPredeterminada() {
+            let fechaActual = new Date();
+            let año = fechaActual.getFullYear();
+            let mes = ('0' + (fechaActual.getMonth() + 1)).slice(-2);
+            let dia = ('0' + fechaActual.getDate()).slice(-2);
+            let horaInicio = '08:00';
+            let horaFin = '16:00';
+            document.getElementById('inicio').value = `${año}-${mes}-${dia}T${horaInicio}`;
+            document.getElementById('fin').value = `${año}-${mes}-${dia}T${horaFin}`;
+        }
+
+        window.onload = obtenerFechaHoraPredeterminada;
+    </script>
+</head>
+<body>
+    <h1>Consulta de Producción</h1>
+    <table border="1">
+        <tr>
+            <td><label for="inicio">Inicio:</label></td>
+            <td><input type="datetime-local" id="inicio"></td>
+            <td><button id="modificarInicio">Modificar Inicio</button></td>
+        </tr>
+        <tr>
+            <td><label for="fin">Fin:</label></td>
+            <td><input type="datetime-local" id="fin"></td>
+            <td><button id="modificarFin">Modificar Fin</button></td>
+        </tr>
+        <tr>
+            <td colspan="2"><div id="resultado">Resultado aparecerá aquí</div></td>
+            <td><button id="consultaBtn">Consultar Producción</button></td>
+        </tr>
+    </table>
+    <script>
+        document.getElementById('consultaBtn').addEventListener('click', function() {
+            let inicioStr = document.getElementById('inicio').value;
+            let finStr = document.getElementById('fin').value;
+    
+            // Convertir las fechas de inicio y fin a formato Unix time
+            let inicioUnix = new Date(inicioStr).getTime() / 1000;
+            let finUnix = new Date(finStr).getTime() / 1000;
+    
+            fetch(`consultarProduccion.php?inicio=${inicioUnix}&fin=${finUnix}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('resultado').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+    
+</body>
+</html>

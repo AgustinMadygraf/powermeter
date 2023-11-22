@@ -113,4 +113,4 @@ while True:
             update_database(connection, HR_COUNTER1_LO, HR_COUNTER1_lo, descripcion="HR_COUNTER1_LO ")
             update_database(connection, HR_COUNTER1_HI, HR_COUNTER1_hi, descripcion="HR_COUNTER1_HI ")
 
-    time.sleep(10)
+    time.sleep(1)
