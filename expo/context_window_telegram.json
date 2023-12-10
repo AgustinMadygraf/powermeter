@@ -3,30 +3,6 @@
         "6354318248": [
             {
                 "role": "user",
-                "content": "/start"
-            },
-            {
-                "role": "user",
-                "content": "Hi"
-            },
-            {
-                "role": "user",
-                "content": "Hola"
-            },
-            {
-                "role": "user",
-                "content": "Hola"
-            },
-            {
-                "role": "user",
-                "content": "Viva la libertad."
-            },
-            {
-                "role": "user",
-                "content": "Zurdos de mierda tiemblen!!!"
-            },
-            {
-                "role": "user",
                 "content": "Jajajja"
             },
             {
@@ -58,6 +34,14 @@
             {
                 "role": "user",
                 "content": "Hola"
+            },
+            {
+                "role": "user",
+                "content": "respondeme la pregunta anterior"
+            },
+            {
+                "role": "assistant",
+                "content": "La Inteligencia Artificial (IA) se refiere al desarrollo de sistemas inform\u00e1ticos con la capacidad de llevar a cabo tareas que normalmente requieren inteligencia humana. Esto puede incluir aprender y adaptarse a nuevas entradas, entender el lenguaje humano, reconocer patrones y hacer predicciones. La IA puede ser aplicada en muchas \u00e1reas diferentes, desde el reconocimiento de voz y de imagen hasta los coches aut\u00f3nomos, la medicina personalizada y m\u00e1s all\u00e1."
             }
         ]
     },

@@ -67,28 +67,47 @@ def obtener_api_key():
         print("Escribe 'exit' para salir ")
         if decision.lower() == 'exit':
             return None
-
 def cargar_chat_history(file_path):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
-            return data.get("chat_histories", {}), data.get("user_info", {})
+            chat_histories = data.get("chat_histories", {})
+            user_info = data.get("user_info", {})
+
+            # Identificar el último rol en la conversación del usuario 593052206
+            ultimo_rol = None
+            chat_usuario_especifico = chat_histories.get("593052206", [])
+            if chat_usuario_especifico:
+                ultimo_mensaje = chat_usuario_especifico[-1]  # Obtener el último mensaje
+                ultimo_rol = ultimo_mensaje.get("role")
+
+            return chat_histories, user_info, ultimo_rol
+
     except FileNotFoundError:
         print(f"No se encontró el archivo: {file_path}. Por favor verifica la ruta.")
-        return {}, {}
+        return {}, {}, None
     except json.JSONDecodeError:
         print(f"Error al leer el archivo: {file_path}. Formato de archivo inválido.")
-        return {}, {}
+        return {}, {}, None
+
 
 def iniciar_chat(chat_history, user_info, user_id):
+    # Convertir user_id a string si es necesario (JSON keys son strings)
+    user_id_str = str(user_id)
+
+    # Verificar si user_id existe en chat_history, si no, inicializarlo
+    if user_id_str not in chat_history:
+        chat_history[user_id_str] = []
+
     while True:
         prompt = input("Enter a prompt: ")
         if prompt.lower() == "exit":
             break
         else:
             # Agregar el mensaje del usuario al historial del chat
-            chat_history[user_id].append({"role": "user", "content": prompt})
-            procesar_respuesta(chat_history, user_info, user_id)
+            chat_history[user_id_str].append({"role": "user", "content": prompt})
+            procesar_respuesta(chat_history, user_info, user_id_str)
+
 
 def procesar_respuesta(chat_history, user_info, user_id):
     # Definir las variables de tiempo de espera y reintentos
@@ -187,14 +206,20 @@ if clave_api is None:
 
 while True:
     try:
-        chat_history, user_info = cargar_chat_history(chat_history_path)
+        # Actualiza esta línea para manejar los tres valores devueltos
+        chat_history, user_info, ultimo_rol = cargar_chat_history(chat_history_path)
+
+        # Ahora puedes usar `ultimo_rol` para saber si el último mensaje fue de "user" o "assistant"
+        if ultimo_rol:
+            print(f"El último mensaje en la conversación con el usuario 593052206 fue de un '{ultimo_rol}'.")
+
         openai.api_key = clave_api
-        user_id = "593052206"  # Asegúrate de que este sea el ID correcto
+        user_id = 593052206
         iniciar_chat(chat_history, user_info, user_id)
         break
+
     except openai.error.AuthenticationError:
-        print("\nError de autenticación.")
-        print("Escribe 'exit' para salir.")
+        print("\nError de autenticación. Escribe 'exit' para salir.")
         decision = input()
         if decision.lower() == 'exit':
             break
