@@ -60,12 +60,28 @@
                 "content": "Hola"
             },
             {
-                "role": "assistant",
-                "content": "\u00a1Hola! \u00bfC\u00f3mo puedo ayudarte hoy?"
+                "role": "user",
+                "content": "responde"
             },
             {
                 "role": "assistant",
                 "content": "\u00a1Hola! \u00bfC\u00f3mo puedo ayudarte hoy?"
+            },
+            {
+                "role": "user",
+                "content": "responde mis preguntas anteriores por favor"
+            },
+            {
+                "role": "assistant",
+                "content": "\u00a1Por supuesto! \n\n1. Machine Learning: Es una disciplina de la Inteligencia Artificial que permite a las m\u00e1quinas aprender de datos y mejorar su rendimiento sin necesidad de ser programadas de forma expl\u00edcita. Se basa en algoritmos y modelos matem\u00e1ticos para identificar patrones en los datos y hacer predicciones o decisiones.\n\n2. Inteligencia Artificial: Es la rama de la ciencia de la computaci\u00f3n que se encarga de desarrollar programas y sistemas capaces de realizar tareas que, hasta ahora, necesitaban de la intervenci\u00f3n humana, como la comprensi\u00f3n y generaci\u00f3n de lenguaje natural, el reconocimiento de voz e imagen, el aprendizaje y la planificaci\u00f3n de problemas."
+            },
+            {
+                "role": "user",
+                "content": "Gracias por la respuesta"
+            },
+            {
+                "role": "assistant",
+                "content": "\u00a1De nada! Si tienes m\u00e1s preguntas, no dudes en hacerlas. Estoy aqu\u00ed para ayudarte."
             }
         ]
     },

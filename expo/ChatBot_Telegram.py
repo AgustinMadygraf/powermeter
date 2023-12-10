@@ -1,4 +1,4 @@
-#ChatBot_Telegram_v0.py
+#ChatBot_Telegram.py - ver línea 192
 import os
 import openai
 import json
@@ -6,10 +6,56 @@ import time
 import requests
 import random
 import sys
-
+import telegram
+import ChatCollectorBot
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+async def main():
+    token_telegram = os.getenv('telegram_token')
+    bot = telegram.Bot(token_telegram)
+
+    async with bot:
+        historial = await bot.get_updates()
+
+        # Diccionario para almacenar el historial de cada chat
+        chat_histories = {}
+        user_info = {}
+
+        for update in historial:
+            if update.message:
+                chat_id = update.message.chat.id
+                text = update.message.text
+
+                # Crear una nueva entrada en el diccionario si no existe
+                if chat_id not in chat_histories:
+                    chat_histories[chat_id] = []
+
+                # Agregar el mensaje al historial del chat
+                chat_histories[chat_id].append({
+                    "role": "user",
+                    "content": text
+                })
+
+                # Recolectar la información del usuario
+                user = update.message.from_user
+                if user.id not in user_info:
+                    user_info[user.id] = {
+                        "username": user.username or 'Sin username',
+                        "first_name": user.first_name,
+                        "last_name": user.last_name or '',
+                        "id": user.id
+                    }
+
+        # Guardar el historial de cada chat y la información del usuario en un archivo JSON
+        data_to_save = {
+            "user_info": user_info,
+            "chat_histories": chat_histories
+        }
+
+        with open("context_window_telegram.json", "w", encoding="utf-8") as file:
+            json.dump(data_to_save, file, indent=4, ensure_ascii=False)
 
 def obtener_api_key():
     clave_api = os.getenv('OPENAI_API_KEY')
@@ -143,7 +189,8 @@ while True:
     try:
         chat_history, user_info = cargar_chat_history(chat_history_path)
         openai.api_key = clave_api
-        user_id = "593052206"  # Asegúrate de que este sea el ID correcto
+        #ChatCollectorBot.main()    # sacar comentario
+        user_id = "593052206"  # esto dependerá de la función de la línea anterior
         iniciar_chat(chat_history, user_info, user_id)
         break
     except openai.error.AuthenticationError:

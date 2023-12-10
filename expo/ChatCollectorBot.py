@@ -10,7 +10,6 @@ def limpiar_pantalla():
 async def main():
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
-    print("Hola mundo")
 
     async with bot:
         historial = await bot.get_updates()
