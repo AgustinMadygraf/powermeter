@@ -7,7 +7,6 @@ import requests
 import random
 import sys
 import telegram
-import ChatCollectorBot
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')

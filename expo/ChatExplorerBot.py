@@ -1,4 +1,4 @@
-#ChatCollectorBot.py
+#ChatExplorerBot.py
 import asyncio
 import telegram
 import os
