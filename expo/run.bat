@@ -1,4 +1,4 @@
 @echo off
 cd %~dp0
-python ChatBot_OpenAI_stream_v0.py
+ChatBot_OpenAI_stream_v1.py
 pause

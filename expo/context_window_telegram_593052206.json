@@ -1,0 +1,14 @@
+[
+    {
+        "role": "user",
+        "content": "Hola. Proporiconame Saludo breve"
+    },
+    {
+        "role": "assistant",
+        "content": "\u00a1Hola! \u00bfC\u00f3mo est\u00e1s?"
+    },
+    {
+        "role": "assistant",
+        "content": "\u00a1Hola! \u00bfC\u00f3mo est\u00e1s?"
+    }
+]

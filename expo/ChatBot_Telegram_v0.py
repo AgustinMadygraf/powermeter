@@ -103,21 +103,6 @@ def procesar_respuesta(chat_history):
             print(f"Esperando {tiempo_espera_con_jitter:.2f} segundos antes del próximo intento.")
             time.sleep(tiempo_espera_con_jitter)
 
-def imprimir_archivos_json(carpeta):
-    archivos = os.listdir(carpeta)
-    n = 0
-    archivos_json = [archivo for archivo in archivos if archivo.endswith('.json') and archivo.startswith('context_window_')]
-    archivos_dict = {}
-    for archivo in archivos_json:
-        ruta_completa = os.path.join(carpeta, archivo)
-        try:
-            n += 1
-            archivos_dict[str(n)] = archivo  # Asigna el número a cada archivo
-            print(f"{n} - {archivo[15:-5]}")
-        except Exception as e:
-            print(f"No se pudo leer el archivo {archivo}. Error: {e}")
-    return archivos_dict
-
 def guardar_chat_history(chat_history, chat_history_path):
     try:
         with open(chat_history_path, 'w') as file:
@@ -133,22 +118,12 @@ print("")
 print("Inicializando...")
 
 # Uso de la función
-carpeta = os.getcwd()  # Obtiene la ubicación actual del script
-archivos_dict = imprimir_archivos_json(carpeta)
-1
-print("Presione el NÚMERO de la opción que desea seleccionar")
-while True:
-    cgn = input()
-    if cgn in archivos_dict:
-        chat_history_path = archivos_dict[cgn]
-        print(f"Usted seleccionó la opción {cgn}")
-        print(f"La opción seleccionada es el archivo: {chat_history_path}")
-        break  # Salir del bucle
-    else:
-        print(f"Selección inválida: {cgn}. Intente de nuevo:")
+
+chat_history_path = "context_window_telegram.json"
 
 # Aquí puedes usar chat_history_path para lo que necesites después de la selección
 print(f"El archivo seleccionado para trabajar es: {chat_history_path}")
+time.sleep(4)
 
 clave_api = obtener_api_key()
 
