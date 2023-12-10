@@ -1,6 +1,7 @@
 import asyncio
 import telegram
 import os
+from tabulate import tabulate
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -12,33 +13,35 @@ async def main():
     async with bot:
         historial = await bot.get_updates()
 
-        # Usaremos un diccionario para mapear los números a los IDs de chat con nombres y usernames
+        # Diccionario para almacenar la información de los chats
         chat_info_dict = {}
 
         for update in historial:
             if update.message:
                 chat_id = update.message.chat.id
                 first_name = update.message.chat.first_name
-                last_name = update.message.chat.last_name or ''  # Algunos usuarios pueden no tener last_name
-                username = update.message.chat.username or 'Sin username'  # Algunos usuarios pueden no tener username
-                chat_info_dict[chat_id] = f"{first_name} {last_name} @{username}".strip()
+                last_name = update.message.chat.last_name or ''
+                username = update.message.chat.username or 'Sin username'
+                # Almacenar la información del chat solo si no está ya en el diccionario
+                if chat_id not in chat_info_dict:
+                    chat_info_dict[chat_id] = [first_name, last_name, username]
 
-        print("Chats disponibles:")
-        for num, (chat_id, info) in enumerate(chat_info_dict.items(), start=1):
-            print(f"{num}: Chat ID {chat_id} - {info}")
+        # Lista para la tabla
+        chat_info_list = [[num, chat_id] + info for num, (chat_id, info) in enumerate(chat_info_dict.items(), start=1)]
 
-        seleccion = int(input("Elige un número para ver el historial del chat correspondiente: "))
+        # Mostrar la tabla de chats
+        print(tabulate(chat_info_list, headers=["#", "Chat ID", "Nombre", "Username"], tablefmt="grid"))
 
-        # Obtener el ID de chat basado en la selección
-        selected_id = list(chat_info_dict.keys())[seleccion - 1] if 0 < seleccion <= len(chat_info_dict) else None
+        seleccion = int(input("Elige el número para ver el historial del chat correspondiente: "))
 
-        if selected_id is not None:
+        # Buscar el ID de chat basado en la selección
+        if 0 < seleccion <= len(chat_info_list):
+            selected_id, first_name, last_name, username = chat_info_list[seleccion - 1][1:]
+            print(f"Usted seleccionó el chat {selected_id} que corresponde a {first_name} {last_name}, @{username}")
+            print("")
             for update in historial:
                 if update.message and update.message.chat.id == selected_id:
                     text = update.message.text
-                    first_name = update.message.chat.first_name
-                    last_name = update.message.chat.last_name or 'Sin Last Name'
-                    username = update.message.chat.username or 'Sin username'
                     print(f"{first_name} {last_name} @{username}: {text}")
         else:
             print("Selección inválida.")
