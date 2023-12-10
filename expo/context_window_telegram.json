@@ -1,18 +1,4 @@
 {
-    "user_info": {
-        "6354318248": {
-            "username": "Sin username",
-            "first_name": "Adrian Alejandro",
-            "last_name": "Garcia",
-            "id": 6354318248
-        },
-        "593052206": {
-            "username": "AgustinDeOz",
-            "first_name": "Agustin",
-            "last_name": "",
-            "id": 593052206
-        }
-    },
     "chat_histories": {
         "6354318248": [
             {
@@ -59,11 +45,11 @@
             },
             {
                 "role": "user",
-                "content": "¿Qué es el Machine Learning?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
             },
             {
                 "role": "user",
-                "content": "¿Qué es la Inteligencia Artificial?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?"
             },
             {
                 "role": "user",
@@ -72,7 +58,29 @@
             {
                 "role": "user",
                 "content": "Hola"
+            },
+            {
+                "role": "user",
+                "content": "HOla"
+            },
+            {
+                "role": "assistant",
+                "content": "\u00a1Hola! \u00bfC\u00f3mo puedo ayudarte hoy?"
             }
         ]
+    },
+    "user_info": {
+        "6354318248": {
+            "username": "Sin username",
+            "first_name": "Adrian Alejandro",
+            "last_name": "Garcia",
+            "id": 6354318248
+        },
+        "593052206": {
+            "username": "AgustinDeOz",
+            "first_name": "Agustin",
+            "last_name": "",
+            "id": 593052206
+        }
     }
 }
