@@ -58,14 +58,6 @@
             {
                 "role": "user",
                 "content": "Hola"
-            },
-            {
-                "role": "user",
-                "content": "HOla"
-            },
-            {
-                "role": "assistant",
-                "content": "\u00a1Hola! \u00bfC\u00f3mo puedo ayudarte hoy?"
             }
         ]
     },

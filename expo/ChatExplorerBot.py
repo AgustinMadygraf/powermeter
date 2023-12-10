@@ -28,7 +28,8 @@ async def main():
         for num, (chat_id, info) in enumerate(chat_info_dict.items(), start=1):
             print(f"{num}: Chat ID {chat_id} - {info}")
 
-        seleccion = int(input("Elige un número para ver el historial del chat correspondiente: "))
+        #seleccion = int(input("Elige un número para ver el historial del chat correspondiente: "))
+        seleccion = 2
 
         # Obtener el ID de chat basado en la selección
         if 0 < seleccion <= len(chat_info_dict):
@@ -39,7 +40,7 @@ async def main():
                 if update.message and update.message.chat.id == selected_id:
                     text = update.message.text
                     first_name = update.message.chat.first_name
-                    last_name = update.message.chat.last_name or 'Sin Last Name'
+                    last_name = update.message.chat.last_name or ''
                     username = update.message.chat.username or 'Sin username'
                     print(f"{first_name} {last_name} @{username}: {text}")
             if selected_id is not None:
