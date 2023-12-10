@@ -1,0 +1,86 @@
+{
+    "chat_histories": {
+        "6354318248": [
+            {
+                "role": "user",
+                "content": "/start"
+            },
+            {
+                "role": "user",
+                "content": "Hi"
+            },
+            {
+                "role": "user",
+                "content": "Hola"
+            },
+            {
+                "role": "user",
+                "content": "Hola"
+            },
+            {
+                "role": "user",
+                "content": "Viva la libertad."
+            },
+            {
+                "role": "user",
+                "content": "Zurdos de mierda tiemblen!!!"
+            },
+            {
+                "role": "user",
+                "content": "Jajajja"
+            },
+            {
+                "role": "user",
+                "content": "Se llama gobernabilidad"
+            },
+            {
+                "role": "user",
+                "content": "Sino te dan vuelta el pais"
+            }
+        ],
+        "593052206": [
+            {
+                "role": "user",
+                "content": "Probando"
+            },
+            {
+                "role": "user",
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
+            },
+            {
+                "role": "user",
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?"
+            },
+            {
+                "role": "user",
+                "content": "Proporiconame respuesta"
+            },
+            {
+                "role": "user",
+                "content": "Hola"
+            },
+            {
+                "role": "assistant",
+                "content": "\u00a1Hola! \u00bfC\u00f3mo puedo ayudarte hoy?"
+            },
+            {
+                "role": "assistant",
+                "content": "\u00a1Hola! \u00bfC\u00f3mo puedo ayudarte hoy?"
+            }
+        ]
+    },
+    "user_info": {
+        "6354318248": {
+            "username": "Sin username",
+            "first_name": "Adrian Alejandro",
+            "last_name": "Garcia",
+            "id": 6354318248
+        },
+        "593052206": {
+            "username": "AgustinDeOz",
+            "first_name": "Agustin",
+            "last_name": "",
+            "id": 593052206
+        }
+    }
+}

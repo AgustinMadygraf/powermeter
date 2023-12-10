@@ -1,4 +1,4 @@
-
+#ChatBot_Telegram_v0.py
 import os
 import openai
 import json
@@ -25,34 +25,39 @@ def obtener_api_key():
 def cargar_chat_history(file_path):
     try:
         with open(file_path, 'r') as file:
-            return json.load(file)
+            data = json.load(file)
+            return data.get("chat_histories", {}), data.get("user_info", {})
     except FileNotFoundError:
         print(f"No se encontró el archivo: {file_path}. Por favor verifica la ruta.")
-        return []
+        return {}, {}
     except json.JSONDecodeError:
         print(f"Error al leer el archivo: {file_path}. Formato de archivo inválido.")
-        return []
+        return {}, {}
 
-def iniciar_chat():
+def iniciar_chat(chat_history, user_info, user_id):
     while True:
         prompt = input("Enter a prompt: ")
         if prompt.lower() == "exit":
             break
         else:
-            chat_history.append({"role": "user", "content": prompt})
-            procesar_respuesta(chat_history)
+            # Agregar el mensaje del usuario al historial del chat
+            chat_history[user_id].append({"role": "user", "content": prompt})
+            procesar_respuesta(chat_history, user_info, user_id)
 
-def procesar_respuesta(chat_history):
-    max_reintentos = 5
+def procesar_respuesta(chat_history, user_info, user_id):
+    # Definir las variables de tiempo de espera y reintentos
     tiempo_espera_base = 1  # tiempo de espera base en segundos
     tiempo_espera_maximo = 60  # tiempo de espera máximo en segundos
+    max_reintentos = 5
 
+    # Extraer solo los mensajes del usuario especificado
+    user_messages = chat_history.get(user_id, [])
+    
     for intento in range(max_reintentos):
         try:
             response_iterator = openai.ChatCompletion.create(
-                # model="gpt-3.5-turbo",
                 model="gpt-4",
-                messages=chat_history,
+                messages=user_messages,  # Esta línea utiliza user_messages
                 stream=True,
             )
 
@@ -65,11 +70,11 @@ def procesar_respuesta(chat_history):
                 time.sleep(0.15)
                 limpiar_pantalla()
 
-            chat_history.append({"role": "assistant", "content": full_reply_content})
+            # Agregar la respuesta del asistente al historial del chat
+            chat_history[user_id].append({"role": "assistant", "content": full_reply_content})
             print(f"GPT: {full_reply_content}")
-            guardar_chat_history(chat_history, chat_history_path)
-
-            break  # Salir del bucle si la solicitud fue exitosa
+            guardar_chat_history(chat_history, user_info, chat_history_path)
+            break
 
         except openai.error.RateLimitError:
             print("Se ha alcanzado el límite de tasa de solicitudes. Esperando antes de reintentar...")
@@ -81,7 +86,6 @@ def procesar_respuesta(chat_history):
             tiempo_espera *= 2
         except openai.error.InvalidRequestError as e:
             print(f"Error de solicitud inválida: {e}")
-            break
         except requests.exceptions.ConnectionError:
             print("Error de conexión. Comprobando la red y reintentando...")
             time.sleep(tiempo_espera)
@@ -92,7 +96,6 @@ def procesar_respuesta(chat_history):
             tiempo_espera *= 2
         except requests.exceptions.HTTPError as e:
             print(f"Error HTTP: {e}")
-            break
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.HTTPError) as e:
             print(f"Error de red o de servidor: {e}. Reintentando...")
 
@@ -103,12 +106,17 @@ def procesar_respuesta(chat_history):
             print(f"Esperando {tiempo_espera_con_jitter:.2f} segundos antes del próximo intento.")
             time.sleep(tiempo_espera_con_jitter)
 
-def guardar_chat_history(chat_history, chat_history_path):
+def guardar_chat_history(chat_history, user_info, chat_history_path):
     try:
+        data = {
+            "chat_histories": chat_history,
+            "user_info": user_info
+        }
         with open(chat_history_path, 'w') as file:
-            json.dump(chat_history, file, indent=4)
+            json.dump(data, file, indent=4)
     except Exception as e:
         print(f"No se pudo guardar el historial del chat. Error: {e}")
+
 
 # Inicio del programa
 limpiar_pantalla()
@@ -133,14 +141,14 @@ if clave_api is None:
 
 while True:
     try:
-        chat_history = cargar_chat_history(chat_history_path)
+        chat_history, user_info = cargar_chat_history(chat_history_path)
         openai.api_key = clave_api
-        procesar_respuesta(chat_history)
-        iniciar_chat()  # Solo necesitamos llamar a iniciar_chat
+        user_id = "593052206"  # Asegúrate de que este sea el ID correcto
+        iniciar_chat(chat_history, user_info, user_id)
         break
     except openai.error.AuthenticationError:
         print("\nError de autenticación.")
         print("Escribe 'exit' para salir.")
         decision = input()
         if decision.lower() == 'exit':
-            break  # Sale del bucle y termina el programa
+            break
