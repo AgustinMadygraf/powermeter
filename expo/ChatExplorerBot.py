@@ -20,8 +20,8 @@ async def main():
             if update.message:
                 chat_id = update.message.chat.id
                 first_name = update.message.chat.first_name
-                last_name = update.message.chat.last_name or ''  # Algunos usuarios pueden no tener last_name
-                username = update.message.chat.username or 'Sin username'  # Algunos usuarios pueden no tener username
+                last_name = update.message.chat.last_name or ''  
+                username = update.message.chat.username or 'Sin username'  
                 chat_info_dict[chat_id] = f"{first_name} {last_name} @{username}".strip()
 
         print("Chats disponibles:")
@@ -31,9 +31,10 @@ async def main():
         seleccion = int(input("Elige un número para ver el historial del chat correspondiente: "))
 
         # Obtener el ID de chat basado en la selección
-        selected_id = list(chat_info_dict.keys())[seleccion - 1] if 0 < seleccion <= len(chat_info_dict) else None
+        if 0 < seleccion <= len(chat_info_dict):
+            selected_id = list(chat_info_dict.keys())[seleccion - 1]
+            print(f"Usted seleccionó el chat con ID {selected_id}")
 
-        if selected_id is not None:
             for update in historial:
                 if update.message and update.message.chat.id == selected_id:
                     text = update.message.text
@@ -41,6 +42,12 @@ async def main():
                     last_name = update.message.chat.last_name or 'Sin Last Name'
                     username = update.message.chat.username or 'Sin username'
                     print(f"{first_name} {last_name} @{username}: {text}")
+            if selected_id is not None:
+                # ... [resto del código] ...
+                return selected_id  # Devolver el selected_id
+            else:
+                print("Selección inválida.")
+                return None
         else:
             print("Selección inválida.")
 

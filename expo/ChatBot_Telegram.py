@@ -1,4 +1,4 @@
-#ChatBot_Telegram.py - ver línea 192
+#ChatBot_Telegram.py
 import os
 import openai
 import json
@@ -7,6 +7,7 @@ import requests
 import random
 import sys
 import telegram
+
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -188,8 +189,7 @@ while True:
     try:
         chat_history, user_info = cargar_chat_history(chat_history_path)
         openai.api_key = clave_api
-        #ChatCollectorBot.main()    # sacar comentario
-        user_id = "593052206"  # esto dependerá de la función de la línea anterior
+        user_id = "593052206"  # Asegúrate de que este sea el ID correcto
         iniciar_chat(chat_history, user_info, user_id)
         break
     except openai.error.AuthenticationError:
