@@ -74,7 +74,7 @@ async def procesar_respuesta(chat_history, user_info, user_id):
                 collected_messages.append(chunk_message)
                 full_reply_content = ''.join([m.get('content', '') for m in collected_messages])
                 print(full_reply_content)
-                time.sleep(0.15)
+                #time.sleep(0.15)
                 limpiar_pantalla()
 
             # Agregar la respuesta del asistente al historial del chat

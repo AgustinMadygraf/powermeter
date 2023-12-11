@@ -9,13 +9,13 @@
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?",
+                "content": "Ãƒâ€šÃ‚Â¿QuÃƒÆ’Ã‚Â© es el Machine Learning?",
                 "update_id": 532146003,
                 "unixtime": 1702233022
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?",
+                "content": "Ãƒâ€šÃ‚Â¿QuÃƒÆ’Ã‚Â© es la Inteligencia Artificial?",
                 "update_id": 532146004,
                 "unixtime": 1702234840
             },
@@ -33,44 +33,68 @@
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQU\u00c3\u00a9 es el Deep Learning?",
+                "content": "Ãƒâ€šÃ‚Â¿QUÃƒÆ’Ã‚Â© es el Deep Learning?",
                 "update_id": 532146007,
                 "unixtime": 1702252377
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es Industria 4.0?",
+                "content": "Ãƒâ€šÃ‚Â¿QuÃƒÆ’Ã‚Â© es Industria 4.0?",
                 "update_id": 532146008,
                 "unixtime": 1702253044
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la rob\u00c3\u00b3tica?",
+                "content": "Ãƒâ€šÃ‚Â¿QuÃƒÆ’Ã‚Â© es la robÃƒÆ’Ã‚Â³tica?",
                 "update_id": 532146009,
                 "unixtime": 1702257841
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?",
+                "content": "Ãƒâ€šÃ‚Â¿QuÃƒÆ’Ã‚Â© es el Machine Learning?",
                 "update_id": 532146010,
                 "unixtime": 1702258169
             },
             {
                 "role": "user",
-                "content": "Que es Visi\u00c3\u00b3n artificial?",
+                "content": "Que es VisiÃƒÆ’Ã‚Â³n artificial?",
                 "update_id": 532146011,
                 "unixtime": 1702264054
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Deep Learning?",
+                "content": "Ãƒâ€šÃ‚Â¿QuÃƒÆ’Ã‚Â© es el Deep Learning?",
                 "update_id": 532146012,
                 "unixtime": 1702288464
             },
             {
                 "role": "assistant",
-                "content": "Deep Learning es una subcategor\u00eda de machine learning, la cual a su vez es una subcategor\u00eda de la inteligencia artificial (AI). Deep learning es la pr\u00f3xima evoluci\u00f3n de machine learning. En pocas palabras, deep learning toma el concepto de machine learning un paso m\u00e1s all\u00e1 al usar algunas de las t\u00e9cnicas para ense\u00f1ar a las computadoras a ver, aprender, y reconocer los patrones de la misma manera que los humanos. Esto se logra a trav\u00e9s de redes neuronales artificiales. Las redes neuronales se inspiran en las redes neuronales biol\u00f3gicas presentes en nuestros cerebros. Estas redes artificiales crean una especie de simulaci\u00f3n de un cerebro simplificado que puede 'aprender' de los datos entrantes.",
+                "content": "Deep Learning es una subcategorÃƒÂ­a de machine learning, la cual a su vez es una subcategorÃƒÂ­a de la inteligencia artificial (AI). Deep learning es la prÃƒÂ³xima evoluciÃƒÂ³n de machine learning. En pocas palabras, deep learning toma el concepto de machine learning un paso mÃƒÂ¡s allÃƒÂ¡ al usar algunas de las tÃƒÂ©cnicas para enseÃƒÂ±ar a las computadoras a ver, aprender, y reconocer los patrones de la misma manera que los humanos. Esto se logra a travÃƒÂ©s de redes neuronales artificiales. Las redes neuronales se inspiran en las redes neuronales biolÃƒÂ³gicas presentes en nuestros cerebros. Estas redes artificiales crean una especie de simulaciÃƒÂ³n de un cerebro simplificado que puede 'aprender' de los datos entrantes.",
                 "unixtime": 1702290349,
+                "update_id": 0
+            },
+            {
+                "role": "user",
+                "content": "Ã‚Â¿QuÃƒÂ© es IoT?",
+                "update_id": 532146013,
+                "unixtime": 1702290874
+            },
+            {
+                "role": "assistant",
+                "content": "El Internet de las Cosas (IoT) se refiere a la red de objetos fÃ­sicos, vehÃ­culos, edificios y otros elementos, incrustados con sensores, software, redes y electrÃ³nica, que permiten a estos objetos recoger e intercambiar datos. En otras palabras, el IoT consiste en conectar a Internet dispositivos y objetos que antes no estaban conectados, permitiendo asÃ­ que se puedan controlar y monitorizar de forma remota.",
+                "unixtime": 1702291297,
+                "update_id": 0
+            },
+            {
+                "role": "user",
+                "content": "Â¿QuÃ© es una Red Neuronal?",
+                "update_id": 532146014,
+                "unixtime": 1702291329
+            },
+            {
+                "role": "assistant",
+                "content": "Una red neuronal es un modelo de computación que se inspira en el funcionamiento del cerebro humano y que es utilizado en el campo de la inteligencia artificial y el aprendizaje automático. La idea principal detrás de una red neuronal es imitar la capacidad de aprendizaje, memorización, inferencia y generalización que tiene el cerebro humano.\n\nUna red neuronal consiste en un gran número de neuronas artificiales (también llamadas \"unidades\" o \"nodos\") que están organizadas en capas. Cada neurona está conectada con otras a través de conexiones que tienen un \"peso\" asociado. \n\nDurante el aprendizaje, la red neuronal ajusta estos pesos a partir de los datos de entrada y de los errores que se van produciendo en las predicciones. De este modo, la red neuronal es capaz de aprender a realizar diferentes tareas, como reconocer patrones, clasificar elementos, tomar decisiones, predecir valores, etc.",
+                "unixtime": 1702291370,
                 "update_id": 0
             }
         ]

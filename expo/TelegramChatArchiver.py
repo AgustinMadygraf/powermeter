@@ -1,4 +1,3 @@
-#ChatCollectorBot      
 import asyncio
 import telegram
 import os
@@ -11,6 +10,13 @@ def limpiar_pantalla():
 def datetime_to_unixtime(dt):
     return int(dt.timestamp())
 
+def cargar_datos_existentes(archivo):
+    if os.path.exists(archivo):
+        with open(archivo, 'r', encoding='utf-8') as file:
+            return json.load(file)
+    else:
+        return {"chat_histories": {}, "user_info": {}}
+
 async def main():
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
@@ -18,12 +24,15 @@ async def main():
     async with bot:
         historial = await bot.get_updates()
 
-        chat_histories = {}
-        user_info = {}
+        archivo = "context_window_telegram.json"
+        data_existente = cargar_datos_existentes(archivo)
+
+        chat_histories = data_existente.get("chat_histories", {})
+        user_info = data_existente.get("user_info", {})
 
         for update in historial:
             if update.message:
-                chat_id = update.message.chat.id
+                chat_id = str(update.message.chat.id)  # Asegurarse de que chat_id sea una cadena
                 text = update.message.text
                 update_id = update.update_id
                 message_date = update.message.date
@@ -32,6 +41,8 @@ async def main():
 
                 if chat_id not in chat_histories:
                     chat_histories[chat_id] = []
+                elif any(mensaje["update_id"] == update_id for mensaje in chat_histories[chat_id]):
+                    continue  # Evitar agregar mensajes duplicados
 
                 chat_histories[chat_id].append({
                     "role": "user",
@@ -41,24 +52,19 @@ async def main():
                 })
 
                 user = update.message.from_user
-                if user.id not in user_info:
-                    user_info[user.id] = {
-                        "username": user.username or 'Sin username',
-                        "first_name": user.first_name,
-                        "last_name": user.last_name or '',
-                        "id": user.id
-                    }
-
-        # Ordenar los mensajes por tiempo Unix en cada chat
-        for chat_id, messages in chat_histories.items():
-            chat_histories[chat_id] = sorted(messages, key=lambda x: x['unixtime'])
+                user_info[user.id] = {
+                    "username": user.username or 'Sin username',
+                    "first_name": user.first_name,
+                    "last_name": user.last_name or '',
+                    "id": user.id
+                }
 
         data_to_save = {
             "chat_histories": chat_histories,
             "user_info": user_info
         }
 
-        with open("context_window_telegram.json", "w", encoding="utf-8") as file:
+        with open(archivo, "w", encoding="utf-8") as file:
             json.dump(data_to_save, file, indent=4, ensure_ascii=False)
 
 if __name__ == '__main__':
