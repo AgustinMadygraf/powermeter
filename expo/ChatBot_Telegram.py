@@ -155,10 +155,8 @@ async def main():
             else:
                 limpiar_pantalla()
                 print("Esperando  consulta desde Telegram")
-                time.sleep(1)
-
+                time.sleep(0.5)
                 await TelegramChatArchiver.main()    #acá está el problema
-
         except openai.error.AuthenticationError:
             print("\nError de autenticación. Presione enter para salir.")
             input()

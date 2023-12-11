@@ -3,18 +3,27 @@ import telegram
 import os
 import json
 import datetime
+import sys
+import time
+if sys.version_info[0] >= 3:
+    sys.stdout.reconfigure(encoding='utf-8')
 
-def limpiar_pantalla():
-    os.system('cls' if os.name == 'nt' else 'clear')
+
 def datetime_to_unixtime(dt):
     return int(dt.timestamp())
 def cargar_datos_existentes(archivo):
-    if os.path.exists(archivo):
-        with open(archivo, 'r', encoding='utf-8') as file:
-            return json.load(file)
-    else:
+    try:
+        if os.path.exists(archivo) and os.path.getsize(archivo) > 0:
+            with open(archivo, 'r', encoding='utf-8') as file:
+                return json.load(file)
+        else:
+            return {"chat_histories": {}, "user_info": {}}
+    except json.JSONDecodeError as e:
+        print(f"Error al leer el archivo JSON: {e}")
         return {"chat_histories": {}, "user_info": {}}
 async def main():
+    if sys.version_info[0] >= 3:
+        sys.stdout.reconfigure(encoding='utf-8')
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
     async with bot:
@@ -64,5 +73,4 @@ async def main():
             json.dump(data_to_save, file, indent=4, ensure_ascii=False)
 
 if __name__ == '__main__':
-    limpiar_pantalla()
     asyncio.run(main())
