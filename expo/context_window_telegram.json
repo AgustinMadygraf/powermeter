@@ -1,12 +1,4 @@
 {
-    "user_info": {
-        "593052206": {
-            "username": "AgustinDeOz",
-            "first_name": "Agustin",
-            "last_name": "",
-            "id": 593052206
-        }
-    },
     "chat_histories": {
         "593052206": [
             {
@@ -15,11 +7,11 @@
             },
             {
                 "role": "user",
-                "content": "¿Qué es el Machine Learning?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
             },
             {
                 "role": "user",
-                "content": "¿Qué es la Inteligencia Artificial?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?"
             },
             {
                 "role": "user",
@@ -31,12 +23,32 @@
             },
             {
                 "role": "user",
-                "content": "¿QUé es el Deep Learning?"
+                "content": "\u00c2\u00bfQU\u00c3\u00a9 es el Deep Learning?"
             },
             {
                 "role": "user",
-                "content": "¿Qué es Industria 4.0?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es Industria 4.0?"
+            },
+            {
+                "role": "user",
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la rob\u00c3\u00b3tica?"
+            },
+            {
+                "role": "user",
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
+            },
+            {
+                "role": "assistant",
+                "content": "El Machine Learning o aprendizaje autom\u00e1tico es una rama de la Inteligencia Artificial (IA) que se basa en t\u00e9cnicas que permiten a los sistemas inform\u00e1ticos aprender desde los datos. En t\u00e9rminos simples, es la pr\u00e1ctica de usar algoritmos para analizar datos, aprender de ellos y luego hacer una determinaci\u00f3n o predicci\u00f3n sobre algo. En lugar de programar manualmente las rutinas de software para realizar acciones particulares, el machine learning permite a una m\u00e1quina ser entrenada utilizando grandes cantidades de datos y algoritmos. Es muy utilizado en sistemas de recomendaci\u00f3n, detecci\u00f3n de fraudes, an\u00e1lisis predictivo, entre otros."
             }
         ]
+    },
+    "user_info": {
+        "593052206": {
+            "username": "AgustinDeOz",
+            "first_name": "Agustin",
+            "last_name": "",
+            "id": 593052206
+        }
     }
 }

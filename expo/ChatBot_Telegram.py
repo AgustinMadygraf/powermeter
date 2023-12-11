@@ -124,13 +124,31 @@ async def procesar_respuesta(chat_history, user_info, user_id):
             chat_history[user_id].append({"role": "assistant", "content": full_reply_content})
             print(f"GPT: {full_reply_content}")
             await send(full_reply_content)
-            time.sleep(19)
-
-            await procesar_respuesta(chat_history, user_info, user_id_str)
-            time.sleep(19)
-
+            time.sleep(1)
+            print("5")
+            time.sleep(1)
+            print("4")
+            time.sleep(1)
+            print("3")
+            time.sleep(1)
+            print("2")
+            time.sleep(1)
+            print("1")
+            time.sleep(1)
+            print("0")
             guardar_chat_history(chat_history, user_info, chat_history_path)
-            time.sleep(19)
+            time.sleep(1)
+            print("5")
+            time.sleep(1)
+            print("4")
+            time.sleep(1)
+            print("3")
+            time.sleep(1)
+            print("2")
+            time.sleep(1)
+            print("1")
+            time.sleep(1)
+            print("0")
             break
 
         except openai.error.RateLimitError:
@@ -246,7 +264,8 @@ while True:
             user_id_str = str(user_id)
             procesar_respuesta(chat_history, user_info, user_id_str)
 
-        iniciar_chat(chat_history, user_info, user_id)
+        else:
+            iniciar_chat(chat_history, user_info, user_id)
         break
 
     except openai.error.AuthenticationError:
