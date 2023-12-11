@@ -1,13 +1,16 @@
-#ChatCollectorBot
+#TelegramChatArchiver.py
 import asyncio
 import telegram
 import os
 import json
+import time
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 async def main():
+    print("Hola mundo")
+    time.sleep(5)
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
 

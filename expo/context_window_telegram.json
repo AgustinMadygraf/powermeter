@@ -38,16 +38,12 @@
                 "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
             },
             {
-                "role": "assistant",
-                "content": "El Machine Learning o aprendizaje autom\u00e1tico es una rama de la inteligencia artificial que se basa en la idea de que los sistemas pueden aprender de datos, identificar patrones y tomar decisiones con un m\u00ednimo de intervenci\u00f3n humana. Se utiliza en una variedad de aplicaciones, como filtros de correo no deseado y sistemas de detecci\u00f3n de intrusiones."
-            },
-            {
                 "role": "user",
-                "content": "Gracias"
+                "content": "Que es Visi\u00c3\u00b3n artificial?"
             },
             {
                 "role": "assistant",
-                "content": "\u00a1De nada! Si tienes alguna otra pregunta, no dudes en hacerla."
+                "content": "La visi\u00f3n artificial es una disciplina cient\u00edfica que incluye m\u00e9todos para adquirir, procesar, analizar e interpretar im\u00e1genes del mundo real con el fin de producir informaci\u00f3n num\u00e9rica o simb\u00f3lica para que pueda ser manipulada por una computadora. Se utiliza en diversos campos, como la rob\u00f3tica, la detecci\u00f3n de defectos en la fabricaci\u00f3n industrial, la seguridad, la medicina y m\u00e1s."
             }
         ]
     },

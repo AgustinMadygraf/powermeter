@@ -1,4 +1,4 @@
-#ChatBot_Telegram.py
+#ChatBot_Telegram.py prolema en la línea 175
 import os
 import openai
 import json
@@ -8,62 +8,7 @@ import random
 import sys
 import telegram
 import asyncio
-
-async def act_json():
-    token_telegram = os.getenv('telegram_token')
-    bot = telegram.Bot(token_telegram)
-
-    # Leer datos existentes del archivo JSON
-    try:
-        with open("context_window_telegram.json", "r", encoding="utf-8") as file:
-            existing_data = json.load(file)
-            chat_histories = existing_data.get("chat_histories", {})
-            user_info = existing_data.get("user_info", {})
-            processed_updates = set(existing_data.get("processed_updates", []))
-    except (FileNotFoundError, json.JSONDecodeError):
-        chat_histories = {}
-        user_info = {}
-        processed_updates = set()
-
-    async with bot:
-        historial = await bot.get_updates()
-
-        for update in historial:
-            if update.message and update.update_id not in processed_updates:
-                chat_id = update.message.chat.id
-                text = update.message.text
-
-                # Agregar o actualizar el mensaje en el historial del chat
-                if chat_id not in chat_histories:
-                    chat_histories[chat_id] = []
-                chat_histories[chat_id].append({
-                    "role": "user",
-                    "content": text,
-                    "update_id": update.update_id
-                })
-
-                # Agregar o actualizar la información del usuario
-                user = update.message.from_user
-                if user.id not in user_info:
-                    user_info[user.id] = {
-                        "username": user.username or 'Sin username',
-                        "first_name": user.first_name,
-                        "last_name": user.last_name or '',
-                        "id": user.id
-                    }
-
-                processed_updates.add(update.update_id)
-
-        # Guardar el historial de cada chat actualizado y la información del usuario en un archivo JSON
-        data_to_save = {
-            "user_info": user_info,
-            "chat_histories": chat_histories,
-            "processed_updates": list(processed_updates)
-        }
-
-        with open("context_window_telegram.json", "w", encoding="utf-8") as file:
-            json.dump(data_to_save, file, indent=4, ensure_ascii=False)
-
+import TelegramChatArchiver
 
 async def send(full_reply_content):
     token_telegram = os.getenv('telegram_token')
@@ -206,20 +151,28 @@ async def main():
     if clave_api is None:
         print("No se proporcionó una clave API válida.")
         exit()
+    openai.api_key = obtener_api_key()
+    user_id_str = str(593052206)
+
     while True:
         try:
             chat_history, user_info, ultimo_rol = cargar_chat_history(chat_history_path)
             if ultimo_rol:
                 print(f"El último mensaje en la conversación con el usuario 593052206 fue de un '{ultimo_rol}'.")
 
-            openai.api_key = obtener_api_key()
-            user_id_str = str(593052206)
-
-            if ultimo_rol == "user":
+            if ultimo_rol == "user":                
                 await procesar_respuesta(chat_history, user_info, user_id_str)
-
-            await iniciar_chat(chat_history, user_info, user_id_str)
-            break
+            else:
+                print("Esperando  consulta desde Telegram")
+                time.sleep(1)
+                print("3")
+                time.sleep(1)
+                print("2")
+                time.sleep(1)
+                print("1")
+                time.sleep(1)
+                print("0")
+                await TelegramChatArchiver.main()    #acá está el problema
 
         except openai.error.AuthenticationError:
             print("\nError de autenticación. Presione enter para salir.")
