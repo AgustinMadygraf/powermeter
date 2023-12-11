@@ -57,7 +57,7 @@ def cargar_chat_history(file_path):
         return {}, {}, None
 async def procesar_respuesta(chat_history, user_info, user_id):
     # Definir las variables de tiempo de espera y reintentos
-    tiempo_espera_base = 1  # tiempo de espera base en segundos
+    tiempo_espera = tiempo_espera_base = 1  # Inicializar tiempo_espera aquí
     tiempo_espera_maximo = 60  # tiempo de espera máximo en segundos
     max_reintentos = 5
 
@@ -71,7 +71,7 @@ async def procesar_respuesta(chat_history, user_info, user_id):
         try:
             # Llamada a OpenAI para obtener la respuesta completa
             response = openai.ChatCompletion.create(
-                model="gpt-4",
+                model="gpt-4-1106-preview",
                 messages=openai_messages,  # Usa solo los campos necesarios para OpenAI
             )
 
@@ -91,32 +91,33 @@ async def procesar_respuesta(chat_history, user_info, user_id):
         except openai.error.RateLimitError:
             print("Se ha alcanzado el límite de tasa de solicitudes. Esperando antes de reintentar...")
             time.sleep(tiempo_espera)
-            tiempo_espera *= 2  # Duplicar el tiempo de espera para el próximo reintento
+            tiempo_espera = min(tiempo_espera * 2, tiempo_espera_maximo)  # Duplicar el tiempo de espera para el próximo reintento
         except openai.error.ServiceUnavailableError:
             print("El servicio de OpenAI no está disponible en este momento. Reintentando...")
             time.sleep(tiempo_espera)
-            tiempo_espera *= 2
+            tiempo_espera = min(tiempo_espera * 2, tiempo_espera_maximo)
         except openai.error.InvalidRequestError as e:
             print(f"Error de solicitud inválida: {e}")
         except requests.exceptions.ConnectionError:
             print("Error de conexión. Comprobando la red y reintentando...")
             time.sleep(tiempo_espera)
-            tiempo_espera *= 2
+            tiempo_espera = min(tiempo_espera * 2, tiempo_espera_maximo)
         except requests.exceptions.Timeout:
             print("Tiempo de espera agotado para la solicitud. Reintentando...")
             time.sleep(tiempo_espera)
-            tiempo_espera *= 2
+            tiempo_espera = min(tiempo_espera * 2, tiempo_espera_maximo)
         except requests.exceptions.HTTPError as e:
             print(f"Error HTTP: {e}")
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, requests.exceptions.HTTPError) as e:
             print(f"Error de red o de servidor: {e}. Reintentando...")
 
-            tiempo_espera = min(tiempo_espera_base * (2 ** intento), tiempo_espera_maximo)
             jitter = random.uniform(0, tiempo_espera)
             tiempo_espera_con_jitter = tiempo_espera + jitter
+            tiempo_espera = min(tiempo_espera_con_jitter, tiempo_espera_maximo)
 
-            print(f"Esperando {tiempo_espera_con_jitter:.2f} segundos antes del próximo intento.")
-            time.sleep(tiempo_espera_con_jitter)
+            print(f"Esperando {tiempo_espera:.2f} segundos antes del próximo intento.")
+            time.sleep(tiempo_espera)
+
 def guardar_chat_history(chat_history, user_info, chat_history_path):
     try:
         # Modificar cada mensaje para agregar 'unixtime' y 'update_id'
