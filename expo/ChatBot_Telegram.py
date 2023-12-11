@@ -9,6 +9,13 @@ import sys
 import telegram
 import asyncio
 
+
+
+async def send(full_reply_content):
+    token_telegram = os.getenv('telegram_token')
+    bot = telegram.Bot(token_telegram)
+    async with bot:
+        await bot.send_message(text=full_reply_content, chat_id=593052206)
 async def act_json():
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
@@ -55,51 +62,6 @@ async def act_json():
             json.dump(data_to_save, file, indent=4, ensure_ascii=False)
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
-async def main():
-    token_telegram = os.getenv('telegram_token')
-    bot = telegram.Bot(token_telegram)
-
-    async with bot:
-        historial = await bot.get_updates()
-
-        # Diccionario para almacenar el historial de cada chat
-        chat_histories = {}
-        user_info = {}
-
-        for update in historial:
-            if update.message:
-                chat_id = update.message.chat.id
-                text = update.message.text
-
-                # Crear una nueva entrada en el diccionario si no existe
-                if chat_id not in chat_histories:
-                    chat_histories[chat_id] = []
-
-                # Agregar el mensaje al historial del chat
-                chat_histories[chat_id].append({
-                    "role": "user",
-                    "content": text
-                })
-
-                # Recolectar la información del usuario
-                user = update.message.from_user
-                if user.id not in user_info:
-                    user_info[user.id] = {
-                        "username": user.username or 'Sin username',
-                        "first_name": user.first_name,
-                        "last_name": user.last_name or '',
-                        "id": user.id
-                    }
-
-        # Guardar el historial de cada chat y la información del usuario en un archivo JSON
-        data_to_save = {
-            "user_info": user_info,
-            "chat_histories": chat_histories
-        }
-
-        with open("context_window_telegram.json", "w", encoding="utf-8") as file:
-            json.dump(data_to_save, file, indent=4, ensure_ascii=False)
-
 def obtener_api_key():
     clave_api = os.getenv('OPENAI_API_KEY')
     if clave_api:
@@ -132,27 +94,7 @@ def cargar_chat_history(file_path):
     except json.JSONDecodeError:
         print(f"Error al leer el archivo: {file_path}. Formato de archivo inválido.")
         return {}, {}, None
-def iniciar_chat(chat_history, user_info, user_id):
-    # Convertir user_id a string si es necesario (JSON keys son strings)
-    user_id_str = str(user_id)
-
-    # Verificar si user_id existe en chat_history, si no, inicializarlo
-    if user_id_str not in chat_history:
-        chat_history[user_id_str] = []
-
-    while True:
-        prompt = " "
-        asyncio.run(act_json())
-        chat_history, user_info, ultimo_rol = cargar_chat_history(chat_history_path)
-
-        if prompt.lower() == " ":
-            print("esperando ")
-            time.sleep(1)
-        else:
-            # Agregar el mensaje del usuario al historial del chat
-            chat_history[user_id_str].append({"role": "user", "content": prompt})
-            procesar_respuesta(chat_history, user_info, user_id_str)
-def procesar_respuesta(chat_history, user_info, user_id):
+async def procesar_respuesta(chat_history, user_info, user_id):
     # Definir las variables de tiempo de espera y reintentos
     tiempo_espera_base = 1  # tiempo de espera base en segundos
     tiempo_espera_maximo = 60  # tiempo de espera máximo en segundos
@@ -181,8 +123,14 @@ def procesar_respuesta(chat_history, user_info, user_id):
             # Agregar la respuesta del asistente al historial del chat
             chat_history[user_id].append({"role": "assistant", "content": full_reply_content})
             print(f"GPT: {full_reply_content}")
-            ###################################################################################
+            await send(full_reply_content)
+            time.sleep(19)
+
+            await procesar_respuesta(chat_history, user_info, user_id_str)
+            time.sleep(19)
+
             guardar_chat_history(chat_history, user_info, chat_history_path)
+            time.sleep(19)
             break
 
         except openai.error.RateLimitError:
@@ -214,7 +162,6 @@ def procesar_respuesta(chat_history, user_info, user_id):
 
             print(f"Esperando {tiempo_espera_con_jitter:.2f} segundos antes del próximo intento.")
             time.sleep(tiempo_espera_con_jitter)
-
 def guardar_chat_history(chat_history, user_info, chat_history_path):
     try:
         data = {
@@ -225,6 +172,43 @@ def guardar_chat_history(chat_history, user_info, chat_history_path):
             json.dump(data, file, indent=4)
     except Exception as e:
         print(f"No se pudo guardar el historial del chat. Error: {e}")
+async def iniciar_chat(chat_history, user_info, user_id):
+    # Convertir user_id a string si es necesario (JSON keys son strings)
+    user_id_str = str(user_id)
+    # Verificar si user_id existe en chat_history, si no, inicializarlo
+    if user_id_str not in chat_history:
+        chat_history[user_id_str] = []
+
+    while True:
+        prompt = input("Enter a prompt: ")
+        if prompt.lower() == "exit":
+            break
+        else:
+            # Agregar el mensaje del usuario al historial del chat
+            chat_history[user_id_str].append({"role": "user", "content": prompt})
+            await procesar_respuesta(chat_history, user_info, user_id_str)
+async def main():
+    # Tu código actual en main
+    while True:
+        try:
+            chat_history, user_info, ultimo_rol = cargar_chat_history(chat_history_path)
+            if ultimo_rol:
+                print(f"El último mensaje en la conversación con el usuario 593052206 fue de un '{ultimo_rol}'.")
+
+            openai.api_key = obtener_api_key()
+            user_id_str = str(593052206)
+
+            if ultimo_rol == "user":
+                await procesar_respuesta(chat_history, user_info, user_id_str)
+
+            await iniciar_chat(chat_history, user_info, user_id_str)
+            break
+
+        except openai.error.AuthenticationError:
+            print("\nError de autenticación. Escribe 'exit' para salir.")
+            decision = input()
+            if decision.lower() == 'exit':
+                break
 
 
 # Inicio del programa
@@ -270,3 +254,6 @@ while True:
         decision = input()
         if decision.lower() == 'exit':
             break
+
+if __name__ == '__main__':
+    asyncio.run(main())

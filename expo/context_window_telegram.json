@@ -1,11 +1,5 @@
 {
     "user_info": {
-        "6354318248": {
-            "username": "Sin username",
-            "first_name": "Adrian Alejandro",
-            "last_name": "Garcia",
-            "id": 6354318248
-        },
         "593052206": {
             "username": "AgustinDeOz",
             "first_name": "Agustin",
@@ -14,20 +8,6 @@
         }
     },
     "chat_histories": {
-        "6354318248": [
-            {
-                "role": "user",
-                "content": "Jajajja"
-            },
-            {
-                "role": "user",
-                "content": "Se llama gobernabilidad"
-            },
-            {
-                "role": "user",
-                "content": "Sino te dan vuelta el pais"
-            }
-        ],
         "593052206": [
             {
                 "role": "user",
