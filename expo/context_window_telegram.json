@@ -69,9 +69,9 @@
             },
             {
                 "role": "assistant",
-                "content": "El Deep Learning, o aprendizaje profundo, es una rama del Machine Learning que se basa en redes neuronales artificiales con diferentes niveles de abstracci\u00f3n. Se dice que es \"profundo\" porque las redes neuronales tienen varios niveles, lo que permite aprender y procesar grandes cantidades de informaci\u00f3n de manera m\u00e1s eficaz. Las aplicaciones de Deep Learning incluyen reconocimiento de voz, reconocimiento de im\u00e1genes, veh\u00edculos aut\u00f3nomos y m\u00e1s.",
-                "update_id": 0,
-                "unixtime": 1702289704.2242043
+                "content": "Deep Learning es una subcategor\u00eda de machine learning, la cual a su vez es una subcategor\u00eda de la inteligencia artificial (AI). Deep learning es la pr\u00f3xima evoluci\u00f3n de machine learning. En pocas palabras, deep learning toma el concepto de machine learning un paso m\u00e1s all\u00e1 al usar algunas de las t\u00e9cnicas para ense\u00f1ar a las computadoras a ver, aprender, y reconocer los patrones de la misma manera que los humanos. Esto se logra a trav\u00e9s de redes neuronales artificiales. Las redes neuronales se inspiran en las redes neuronales biol\u00f3gicas presentes en nuestros cerebros. Estas redes artificiales crean una especie de simulaci\u00f3n de un cerebro simplificado que puede 'aprender' de los datos entrantes.",
+                "unixtime": 1702290349,
+                "update_id": 0
             }
         ]
     },

@@ -116,15 +116,22 @@ async def procesar_respuesta(chat_history, user_info, user_id):
             time.sleep(tiempo_espera_con_jitter)
 def guardar_chat_history(chat_history, user_info, chat_history_path):
     try:
-        unixtime = time.time()
+        # Modificar cada mensaje para agregar 'unixtime' y 'update_id'
+        for chat_id, messages in chat_history.items():
+            for message in messages:
+                if 'unixtime' not in message:
+                    message['unixtime'] = int(time.time())
+                if 'update_id' not in message:
+                    message['update_id'] = 0
+
         data = {
             "chat_histories": chat_history,
-            "user_info": user_info,
-            "update_id":0,
-            "unixtime":unixtime
+            "user_info": user_info
         }
+        
         with open(chat_history_path, 'w') as file:
             json.dump(data, file, indent=4)
+
     except Exception as e:
         print(f"No se pudo guardar el historial del chat. Error: {e}")
 async def main():
