@@ -62,20 +62,16 @@ async def procesar_respuesta(chat_history, user_info, user_id):
 
     for intento in range(max_reintentos):
         try:
-            response_iterator = openai.ChatCompletion.create(
+            # Llamada a OpenAI para obtener la respuesta completa
+            response = openai.ChatCompletion.create(
                 model="gpt-4",
                 messages=openai_messages,  # Usa solo los campos necesarios para OpenAI
-                stream=True,
             )
 
-            collected_messages = []
-            for chunk in response_iterator:
-                chunk_message = chunk['choices'][0]['delta']
-                collected_messages.append(chunk_message)
-                full_reply_content = ''.join([m.get('content', '') for m in collected_messages])
-                print(full_reply_content)
-                #time.sleep(0.15)
-                limpiar_pantalla()
+            # Extraer la respuesta completa
+            full_reply_content = response.choices[0].message['content']
+            print(full_reply_content)
+            limpiar_pantalla()
 
             # Agregar la respuesta del asistente al historial del chat
             chat_history[user_id_str].append({"role": "assistant", "content": full_reply_content})
