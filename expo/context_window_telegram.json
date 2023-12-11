@@ -4,56 +4,72 @@
             {
                 "role": "user",
                 "content": "Probando",
-                "update_id": 532146002
+                "update_id": 532146002,
+                "unixtime": 1702227731
             },
             {
                 "role": "user",
                 "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?",
-                "update_id": 532146003
+                "update_id": 532146003,
+                "unixtime": 1702233022
             },
             {
                 "role": "user",
                 "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?",
-                "update_id": 532146004
+                "update_id": 532146004,
+                "unixtime": 1702234840
             },
             {
                 "role": "user",
                 "content": "Proporiconame respuesta",
-                "update_id": 532146005
+                "update_id": 532146005,
+                "unixtime": 1702239593
             },
             {
                 "role": "user",
                 "content": "Hola",
-                "update_id": 532146006
+                "update_id": 532146006,
+                "unixtime": 1702239737
             },
             {
                 "role": "user",
                 "content": "\u00c2\u00bfQU\u00c3\u00a9 es el Deep Learning?",
-                "update_id": 532146007
+                "update_id": 532146007,
+                "unixtime": 1702252377
             },
             {
                 "role": "user",
                 "content": "\u00c2\u00bfQu\u00c3\u00a9 es Industria 4.0?",
-                "update_id": 532146008
+                "update_id": 532146008,
+                "unixtime": 1702253044
             },
             {
                 "role": "user",
                 "content": "\u00c2\u00bfQu\u00c3\u00a9 es la rob\u00c3\u00b3tica?",
-                "update_id": 532146009
+                "update_id": 532146009,
+                "unixtime": 1702257841
             },
             {
                 "role": "user",
                 "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?",
-                "update_id": 532146010
+                "update_id": 532146010,
+                "unixtime": 1702258169
             },
             {
                 "role": "user",
                 "content": "Que es Visi\u00c3\u00b3n artificial?",
-                "update_id": 532146011
+                "update_id": 532146011,
+                "unixtime": 1702264054
+            },
+            {
+                "role": "user",
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Deep Learning?",
+                "update_id": 532146012,
+                "unixtime": 1702288464
             },
             {
                 "role": "assistant",
-                "content": "La visi\u00f3n artificial es una rama de la inteligencia artificial que ense\u00f1a a las computadoras a \"ver\", es decir, a interpretar y entender visualmente el mundo. Esto se logra mediante t\u00e9cnicas de adquisici\u00f3n, procesamiento, an\u00e1lisis y comprensi\u00f3n de im\u00e1genes para la extracci\u00f3n de datos, la toma de decisiones o el control de procesos. Estas t\u00e9cnicas pueden variar desde simples operaciones de captura de im\u00e1genes y preprocesamiento de video hasta el an\u00e1lisis y la interpretaci\u00f3n del contenido de la imagen, a menudo implicando algoritmos de aprendizaje autom\u00e1tico y reconocimiento de patrones."
+                "content": "El Deep Learning o aprendizaje profundo es una subdisciplina de la Inteligencia Artificial (IA) que se centra en el desarrollo y la utilizaci\u00f3n de Redes Neuronales Artificiales con varias capas ocultas (tambi\u00e9n conocidos como \"deep neural networks\"). Estas redes, inspiradas en la forma en que funciona el cerebro humano, est\u00e1n dise\u00f1adas para simular la manera en que los humanos aprendemos y procesamos la informaci\u00f3n.\n\nEl objetivo del Deep Learning es  crear sistemas capaces de aprender y mejorar su rendimiento a medida que procesan m\u00e1s datos. Al contar con numerosas capas de neuronas artificiales que pueden procesar informaci\u00f3n, estos sistemas son capaces de realizar tareas complejas y de alto nivel, incluyendo: reconocimiento de voz, visi\u00f3n por computadora, procesamiento del lenguaje natural, y diagnosis m\u00e9dica, entre otras. \n\nPor ejemplo, en el \u00e1mbito de la visi\u00f3n por computadora, un sistema de Deep Learning puede ser entrenado para reconocer im\u00e1genes concretas introduciendo una gran cantidad de ellas para que el sistema entienda y aprenda las caracter\u00edsticas que las definen. Seg\u00fan m\u00e1s datos le introduzcamos, mejor ser\u00e1 su desempe\u00f1o y capacidad de reconocimiento. Esto permite, por ejemplo, que las redes sociales puedan 'reconocer' y 'etiquetar' rostros humanos en fotograf\u00edas."
             }
         ]
     },

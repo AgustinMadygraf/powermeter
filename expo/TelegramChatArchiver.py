@@ -1,11 +1,15 @@
-#ChatCollectorBot      # ya no duplica pero sobre escribe en lugar de agregar
+#ChatCollectorBot      
 import asyncio
 import telegram
 import os
 import json
+import datetime
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def datetime_to_unixtime(dt):
+    return int(dt.timestamp())
 
 async def main():
     token_telegram = os.getenv('telegram_token')
@@ -22,6 +26,9 @@ async def main():
                 chat_id = update.message.chat.id
                 text = update.message.text
                 update_id = update.update_id
+                message_date = update.message.date
+
+                unixtime = datetime_to_unixtime(message_date)
 
                 if chat_id not in chat_histories:
                     chat_histories[chat_id] = []
@@ -29,7 +36,8 @@ async def main():
                 chat_histories[chat_id].append({
                     "role": "user",
                     "content": text,
-                    "update_id": update_id
+                    "update_id": update_id,
+                    "unixtime": unixtime
                 })
 
                 user = update.message.from_user
@@ -41,6 +49,10 @@ async def main():
                         "id": user.id
                     }
 
+        # Ordenar los mensajes por tiempo Unix en cada chat
+        for chat_id, messages in chat_histories.items():
+            chat_histories[chat_id] = sorted(messages, key=lambda x: x['unixtime'])
+
         data_to_save = {
             "chat_histories": chat_histories,
             "user_info": user_info
@@ -48,8 +60,6 @@ async def main():
 
         with open("context_window_telegram.json", "w", encoding="utf-8") as file:
             json.dump(data_to_save, file, indent=4, ensure_ascii=False)
-
-
 
 if __name__ == '__main__':
     limpiar_pantalla()
