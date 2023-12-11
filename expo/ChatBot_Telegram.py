@@ -215,6 +215,11 @@ while True:
 
         openai.api_key = clave_api
         user_id = 593052206
+
+        if ultimo_rol == "user":
+            user_id_str = str(user_id)
+            procesar_respuesta(chat_history, user_info, user_id_str)
+
         iniciar_chat(chat_history, user_info, user_id)
         break
 

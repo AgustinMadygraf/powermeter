@@ -1,4 +1,4 @@
-#TelegramChatArchiver.py
+#ChatCollectorBot
 import asyncio
 import telegram
 import os
