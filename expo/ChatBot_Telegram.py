@@ -157,15 +157,10 @@ async def main():
             if ultimo_rol == "user":                
                 await procesar_respuesta(chat_history, user_info, user_id_str)
             else:
+                limpiar_pantalla()
                 print("Esperando  consulta desde Telegram")
                 time.sleep(1)
-                print("3")
-                time.sleep(1)
-                print("2")
-                time.sleep(1)
-                print("1")
-                time.sleep(1)
-                print("0")
+
                 await TelegramChatArchiver.main()    #acá está el problema
 
         except openai.error.AuthenticationError:

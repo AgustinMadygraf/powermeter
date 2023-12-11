@@ -6,21 +6,17 @@ import datetime
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
-
 def datetime_to_unixtime(dt):
     return int(dt.timestamp())
-
 def cargar_datos_existentes(archivo):
     if os.path.exists(archivo):
         with open(archivo, 'r', encoding='utf-8') as file:
             return json.load(file)
     else:
         return {"chat_histories": {}, "user_info": {}}
-
 async def main():
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
-
     async with bot:
         historial = await bot.get_updates()
 
