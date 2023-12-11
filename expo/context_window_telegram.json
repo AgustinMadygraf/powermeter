@@ -1,4 +1,18 @@
 {
+    "user_info": {
+        "6354318248": {
+            "username": "Sin username",
+            "first_name": "Adrian Alejandro",
+            "last_name": "Garcia",
+            "id": 6354318248
+        },
+        "593052206": {
+            "username": "AgustinDeOz",
+            "first_name": "Agustin",
+            "last_name": "",
+            "id": 593052206
+        }
+    },
     "chat_histories": {
         "6354318248": [
             {
@@ -21,11 +35,11 @@
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
+                "content": "¿Qué es el Machine Learning?"
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?"
+                "content": "¿Qué es la Inteligencia Artificial?"
             },
             {
                 "role": "user",
@@ -37,30 +51,12 @@
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQU\u00c3\u00a9 es el Deep Learning?"
+                "content": "¿QUé es el Deep Learning?"
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es Industria 4.0?"
-            },
-            {
-                "role": "assistant",
-                "content": "Industria 4.0, tambi\u00e9n conocida como la Cuarta Revoluci\u00f3n Industrial, se refiere a la digitalizaci\u00f3n de la industria y la implementaci\u00f3n de tecnolog\u00edas avanzadas en los procesos de producci\u00f3n. Esto abarca una variedad de tecnolog\u00edas, incluyendo el Internet de las Cosas (IoT), la rob\u00f3tica, la inteligencia artificial (AI), la fabricaci\u00f3n aditiva (como la impresi\u00f3n 3D), el big data y el an\u00e1lisis de datos, entre otras. La Industria 4.0 pretende crear sistemas de producci\u00f3n y cadenas de suministro m\u00e1s inteligentes, flexibles y eficientes."
+                "content": "¿Qué es Industria 4.0?"
             }
         ]
-    },
-    "user_info": {
-        "6354318248": {
-            "username": "Sin username",
-            "first_name": "Adrian Alejandro",
-            "last_name": "Garcia",
-            "id": 6354318248
-        },
-        "593052206": {
-            "username": "AgustinDeOz",
-            "first_name": "Agustin",
-            "last_name": "",
-            "id": 593052206
-        }
     }
 }
