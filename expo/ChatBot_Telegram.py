@@ -116,29 +116,17 @@ async def procesar_respuesta(chat_history, user_info, user_id):
             time.sleep(tiempo_espera_con_jitter)
 def guardar_chat_history(chat_history, user_info, chat_history_path):
     try:
+        unixtime = time.time()
         data = {
             "chat_histories": chat_history,
-            "user_info": user_info
+            "user_info": user_info,
+            "update_id":0,
+            "unixtime":unixtime
         }
         with open(chat_history_path, 'w') as file:
             json.dump(data, file, indent=4)
     except Exception as e:
         print(f"No se pudo guardar el historial del chat. Error: {e}")
-async def iniciar_chat(chat_history, user_info, user_id):
-    # Convertir user_id a string si es necesario (JSON keys son strings)
-    user_id_str = str(user_id)
-    # Verificar si user_id existe en chat_history, si no, inicializarlo
-    if user_id_str not in chat_history:
-        chat_history[user_id_str] = []
-
-    while True:
-        prompt = input("Enter a prompt: ")
-        if prompt.lower() == "exit":
-            break
-        else:
-            # Agregar el mensaje del usuario al historial del chat
-            chat_history[user_id_str].append({"role": "user", "content": prompt})
-            await procesar_respuesta(chat_history, user_info, user_id_str)
 async def main():
     limpiar_pantalla()
     print("Versión de Python:")
