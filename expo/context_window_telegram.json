@@ -3,47 +3,57 @@
         "593052206": [
             {
                 "role": "user",
-                "content": "Probando"
+                "content": "Probando",
+                "update_id": 532146002
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?",
+                "update_id": 532146003
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la Inteligencia Artificial?",
+                "update_id": 532146004
             },
             {
                 "role": "user",
-                "content": "Proporiconame respuesta"
+                "content": "Proporiconame respuesta",
+                "update_id": 532146005
             },
             {
                 "role": "user",
-                "content": "Hola"
+                "content": "Hola",
+                "update_id": 532146006
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQU\u00c3\u00a9 es el Deep Learning?"
+                "content": "\u00c2\u00bfQU\u00c3\u00a9 es el Deep Learning?",
+                "update_id": 532146007
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es Industria 4.0?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es Industria 4.0?",
+                "update_id": 532146008
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la rob\u00c3\u00b3tica?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es la rob\u00c3\u00b3tica?",
+                "update_id": 532146009
             },
             {
                 "role": "user",
-                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?"
+                "content": "\u00c2\u00bfQu\u00c3\u00a9 es el Machine Learning?",
+                "update_id": 532146010
             },
             {
                 "role": "user",
-                "content": "Que es Visi\u00c3\u00b3n artificial?"
+                "content": "Que es Visi\u00c3\u00b3n artificial?",
+                "update_id": 532146011
             },
             {
                 "role": "assistant",
-                "content": "La visi\u00f3n artificial es una disciplina cient\u00edfica que incluye m\u00e9todos para adquirir, procesar, analizar e interpretar im\u00e1genes del mundo real con el fin de producir informaci\u00f3n num\u00e9rica o simb\u00f3lica para que pueda ser manipulada por una computadora. Se utiliza en diversos campos, como la rob\u00f3tica, la detecci\u00f3n de defectos en la fabricaci\u00f3n industrial, la seguridad, la medicina y m\u00e1s."
+                "content": "La visi\u00f3n artificial es una rama de la inteligencia artificial que ense\u00f1a a las computadoras a \"ver\", es decir, a interpretar y entender visualmente el mundo. Esto se logra mediante t\u00e9cnicas de adquisici\u00f3n, procesamiento, an\u00e1lisis y comprensi\u00f3n de im\u00e1genes para la extracci\u00f3n de datos, la toma de decisiones o el control de procesos. Estas t\u00e9cnicas pueden variar desde simples operaciones de captura de im\u00e1genes y preprocesamiento de video hasta el an\u00e1lisis y la interpretaci\u00f3n del contenido de la imagen, a menudo implicando algoritmos de aprendizaje autom\u00e1tico y reconocimiento de patrones."
             }
         ]
     },
