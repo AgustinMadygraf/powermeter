@@ -15,6 +15,13 @@ async def send(full_reply_content):
     bot = telegram.Bot(token_telegram)
     async with bot:
         await bot.send_message(text=full_reply_content, chat_id=593052206)
+
+async def send_a():
+    token_telegram = os.getenv('telegram_token')
+    bot = telegram.Bot(token_telegram)
+    async with bot:
+        await bot.send_message(text='procesando', chat_id=593052206)
+
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
 def obtener_api_key():
@@ -150,7 +157,8 @@ async def main():
             if ultimo_rol:
                 print(f"El último mensaje en la conversación con el usuario 593052206 fue de un '{ultimo_rol}'.")
 
-            if ultimo_rol == "user":                
+            if ultimo_rol == "user":     
+                await send_a()
                 await procesar_respuesta(chat_history, user_info, user_id_str)
             else:
                 limpiar_pantalla()
