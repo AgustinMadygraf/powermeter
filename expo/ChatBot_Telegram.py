@@ -1,4 +1,4 @@
-#ChatBot_Telegram.py prolema en la línea 175
+#ChatBot_Telegram.py problema en la línea 175
 import os
 import openai
 import json
@@ -153,7 +153,6 @@ async def main():
         exit()
     openai.api_key = obtener_api_key()
     user_id_str = str(593052206)
-
     while True:
         try:
             chat_history, user_info, ultimo_rol = cargar_chat_history(chat_history_path)
@@ -178,12 +177,6 @@ async def main():
             print("\nError de autenticación. Presione enter para salir.")
             input()
             break
-
-
-
 chat_history_path = "context_window_telegram.json"
-
-
-
 if __name__ == '__main__':
     asyncio.run(main())

@@ -7,10 +7,16 @@ import time
 
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
-
 async def main():
-    print("Hola mundo")
-    time.sleep(5)
+    print("inicializando")
+    time.sleep(1)
+    print("3")
+    time.sleep(1)
+    print("2")
+    time.sleep(1)
+    print("1")
+    time.sleep(1)
+    print("0")
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
 
