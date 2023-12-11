@@ -78,10 +78,9 @@ def obtener_api_key():
         print("Clave API encontrada en las variables de entorno.")
         return clave_api
     else:
-        print("No se encontró la clave API en las variables de entorno.")
-        print("Escribe 'exit' para salir ")
-        if decision.lower() == 'exit':
-            return None
+        print("No se encontró la clave API en las variables de entorno. presione enter para salir")
+        input()
+        return None
 def cargar_chat_history(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -196,7 +195,17 @@ async def iniciar_chat(chat_history, user_info, user_id):
             chat_history[user_id_str].append({"role": "user", "content": prompt})
             await procesar_respuesta(chat_history, user_info, user_id_str)
 async def main():
-    # Tu código actual en main
+    limpiar_pantalla()
+    print("Versión de Python:")
+    print(sys.version)
+    print("")
+    print("Inicializando...")
+    chat_history_path = "context_window_telegram.json"
+    print(f"El archivo seleccionado para trabajar es: {chat_history_path}")
+    clave_api = obtener_api_key()
+    if clave_api is None:
+        print("No se proporcionó una clave API válida.")
+        exit()
     while True:
         try:
             chat_history, user_info, ultimo_rol = cargar_chat_history(chat_history_path)
@@ -213,54 +222,15 @@ async def main():
             break
 
         except openai.error.AuthenticationError:
-            print("\nError de autenticación. Escribe 'exit' para salir.")
-            decision = input()
-            if decision.lower() == 'exit':
-                break
+            print("\nError de autenticación. Presione enter para salir.")
+            input()
+            break
 
 
-# Inicio del programa
-limpiar_pantalla()
-print("Versión de Python:")
-print(sys.version)
-print("")
-print("Inicializando...")
-
-# Uso de la función
 
 chat_history_path = "context_window_telegram.json"
 
-# Aquí puedes usar chat_history_path para lo que necesites después de la selección
-print(f"El archivo seleccionado para trabajar es: {chat_history_path}")
-clave_api = obtener_api_key()
 
-if clave_api is None:
-    print("No se proporcionó una clave API válida.")
-    exit()
-
-while True:
-    try:
-        # Actualiza esta línea para manejar los tres valores devueltos
-        chat_history, user_info, ultimo_rol = cargar_chat_history(chat_history_path)
-        if ultimo_rol:
-            print(f"El último mensaje en la conversación con el usuario 593052206 fue de un '{ultimo_rol}'.")
-
-        openai.api_key = clave_api
-        user_id = 593052206
-
-        if ultimo_rol == "user":
-            user_id_str = str(user_id)
-            procesar_respuesta(chat_history, user_info, user_id_str)
-
-        else:
-            iniciar_chat(chat_history, user_info, user_id)
-        break
-
-    except openai.error.AuthenticationError:
-        print("\nError de autenticación. Escribe 'exit' para salir.")
-        decision = input()
-        if decision.lower() == 'exit':
-            break
 
 if __name__ == '__main__':
     asyncio.run(main())
