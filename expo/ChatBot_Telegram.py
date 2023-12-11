@@ -9,40 +9,40 @@ import sys
 import telegram
 import asyncio
 
-
-
-async def send(full_reply_content):
-    token_telegram = os.getenv('telegram_token')
-    bot = telegram.Bot(token_telegram)
-    async with bot:
-        await bot.send_message(text=full_reply_content, chat_id=593052206)
 async def act_json():
     token_telegram = os.getenv('telegram_token')
     bot = telegram.Bot(token_telegram)
 
+    # Leer datos existentes del archivo JSON
+    try:
+        with open("context_window_telegram.json", "r", encoding="utf-8") as file:
+            existing_data = json.load(file)
+            chat_histories = existing_data.get("chat_histories", {})
+            user_info = existing_data.get("user_info", {})
+            processed_updates = set(existing_data.get("processed_updates", []))
+    except (FileNotFoundError, json.JSONDecodeError):
+        chat_histories = {}
+        user_info = {}
+        processed_updates = set()
+
     async with bot:
         historial = await bot.get_updates()
 
-        # Diccionario para almacenar el historial de cada chat
-        chat_histories = {}
-        user_info = {}
-
         for update in historial:
-            if update.message:
+            if update.message and update.update_id not in processed_updates:
                 chat_id = update.message.chat.id
                 text = update.message.text
 
-                # Crear una nueva entrada en el diccionario si no existe
+                # Agregar o actualizar el mensaje en el historial del chat
                 if chat_id not in chat_histories:
                     chat_histories[chat_id] = []
-
-                # Agregar el mensaje al historial del chat
                 chat_histories[chat_id].append({
                     "role": "user",
-                    "content": text
+                    "content": text,
+                    "update_id": update.update_id
                 })
 
-                # Recolectar la información del usuario
+                # Agregar o actualizar la información del usuario
                 user = update.message.from_user
                 if user.id not in user_info:
                     user_info[user.id] = {
@@ -52,14 +52,24 @@ async def act_json():
                         "id": user.id
                     }
 
-        # Guardar el historial de cada chat y la información del usuario en un archivo JSON
+                processed_updates.add(update.update_id)
+
+        # Guardar el historial de cada chat actualizado y la información del usuario en un archivo JSON
         data_to_save = {
             "user_info": user_info,
-            "chat_histories": chat_histories
+            "chat_histories": chat_histories,
+            "processed_updates": list(processed_updates)
         }
 
         with open("context_window_telegram.json", "w", encoding="utf-8") as file:
             json.dump(data_to_save, file, indent=4, ensure_ascii=False)
+
+
+async def send(full_reply_content):
+    token_telegram = os.getenv('telegram_token')
+    bot = telegram.Bot(token_telegram)
+    async with bot:
+        await bot.send_message(text=full_reply_content, chat_id=593052206)
 def limpiar_pantalla():
     os.system('cls' if os.name == 'nt' else 'clear')
 def obtener_api_key():
@@ -100,14 +110,17 @@ async def procesar_respuesta(chat_history, user_info, user_id):
     tiempo_espera_maximo = 60  # tiempo de espera máximo en segundos
     max_reintentos = 5
 
-    # Extraer solo los mensajes del usuario especificado
-    user_messages = chat_history.get(user_id, [])
-    
+    user_id_str = str(user_id)
+
+    # Extraer solo los mensajes del usuario especificado y preparar para OpenAI
+    user_messages = chat_history.get(user_id_str, [])
+    openai_messages = [{"role": msg["role"], "content": msg["content"]} for msg in user_messages]
+
     for intento in range(max_reintentos):
         try:
             response_iterator = openai.ChatCompletion.create(
                 model="gpt-4",
-                messages=user_messages,  # Esta línea utiliza user_messages
+                messages=openai_messages,  # Usa solo los campos necesarios para OpenAI
                 stream=True,
             )
 
@@ -121,34 +134,11 @@ async def procesar_respuesta(chat_history, user_info, user_id):
                 limpiar_pantalla()
 
             # Agregar la respuesta del asistente al historial del chat
-            chat_history[user_id].append({"role": "assistant", "content": full_reply_content})
+            chat_history[user_id_str].append({"role": "assistant", "content": full_reply_content})
+
             print(f"GPT: {full_reply_content}")
             await send(full_reply_content)
-            time.sleep(1)
-            print("5")
-            time.sleep(1)
-            print("4")
-            time.sleep(1)
-            print("3")
-            time.sleep(1)
-            print("2")
-            time.sleep(1)
-            print("1")
-            time.sleep(1)
-            print("0")
             guardar_chat_history(chat_history, user_info, chat_history_path)
-            time.sleep(1)
-            print("5")
-            time.sleep(1)
-            print("4")
-            time.sleep(1)
-            print("3")
-            time.sleep(1)
-            print("2")
-            time.sleep(1)
-            print("1")
-            time.sleep(1)
-            print("0")
             break
 
         except openai.error.RateLimitError:
@@ -242,8 +232,6 @@ chat_history_path = "context_window_telegram.json"
 
 # Aquí puedes usar chat_history_path para lo que necesites después de la selección
 print(f"El archivo seleccionado para trabajar es: {chat_history_path}")
-time.sleep(1)
-asyncio.run(act_json())
 clave_api = obtener_api_key()
 
 if clave_api is None:

@@ -39,7 +39,7 @@
             },
             {
                 "role": "assistant",
-                "content": "El Machine Learning o aprendizaje autom\u00e1tico es una rama de la Inteligencia Artificial (IA) que se basa en t\u00e9cnicas que permiten a los sistemas inform\u00e1ticos aprender desde los datos. En t\u00e9rminos simples, es la pr\u00e1ctica de usar algoritmos para analizar datos, aprender de ellos y luego hacer una determinaci\u00f3n o predicci\u00f3n sobre algo. En lugar de programar manualmente las rutinas de software para realizar acciones particulares, el machine learning permite a una m\u00e1quina ser entrenada utilizando grandes cantidades de datos y algoritmos. Es muy utilizado en sistemas de recomendaci\u00f3n, detecci\u00f3n de fraudes, an\u00e1lisis predictivo, entre otros."
+                "content": "El Machine Learning, o aprendizaje autom\u00e1tico, es un subcampo de la inteligencia artificial que se centra en el desarrollo de algoritmos y modelos estad\u00edsticos que permiten a las computadoras aprender a realizar tareas sin ser programadas expl\u00edcitamente para ello. Esencialmente, el machine learning implica alimentar a las m\u00e1quinas con grandes cantidades de datos y permitirles usar estos datos para aprender y hacer predicciones o tomar decisiones que est\u00e1n m\u00e1s all\u00e1 de la capacidad humana."
             }
         ]
     },
