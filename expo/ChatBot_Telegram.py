@@ -71,7 +71,7 @@ async def procesar_respuesta(chat_history, user_info, user_id):
         try:
             # Llamada a OpenAI para obtener la respuesta completa
             response = openai.ChatCompletion.create(
-                model="gpt-4-1106-preview",
+                model="gpt-3.5-turbo",
                 messages=openai_messages,  # Usa solo los campos necesarios para OpenAI
             )
 
