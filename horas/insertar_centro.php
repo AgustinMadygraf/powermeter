@@ -59,7 +59,7 @@ if ($resultado->num_rows > 0) {
                         </select> </td>  
                         <input type='hidden' name='legajo' value='".$fila["legajo"]."'>
                         <input type='hidden' name='fecha' value='".$fila["fecha"]."'>
-                    <td><input type='submit' value='Buscar'></td>
+                    <td><input type='submit' value='Guardar'></td>
                     </form>
                 </td>
             </tr>";

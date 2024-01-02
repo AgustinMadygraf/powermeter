@@ -1,4 +1,5 @@
 <?php
+//procesar.php
 require_once 'includes/db.php';
 
 // Verificar si los parámetros GET están establecidos
@@ -6,6 +7,8 @@ if (isset($_GET['legajo']) && isset($_GET['centro_costo']) && isset($_GET['fecha
     $legajo = $_GET['legajo'];
     $centro_costo = $_GET['centro_costo'];
     $fecha = $_GET['fecha'];
+
+    // Validar los datos aquí (si es necesario)
 
     // Preparar la consulta SQL para actualizar
     $sql = "UPDATE registro_horas_trabajo SET centro_costo = ? WHERE legajo = ? AND fecha = ?";
@@ -17,11 +20,8 @@ if (isset($_GET['legajo']) && isset($_GET['centro_costo']) && isset($_GET['fecha
 
         // Ejecutar la sentencia
         if ($stmt->execute()) {
-            echo "Centro de costo actualizado correctamente para el legajo: " . $legajo;
-            // Esperar 2 segundos
-            sleep(2);
-            // Redireccionar a insertar_centro.php
-            header("Location: insertar_centro.php?legajo=$legajo");
+            // Enviar un mensaje de confirmación a insertar_centro.php
+            header("Location: insertar_centro.php?legajo=$legajo&actualizado=1");
             exit;
         } else {
             echo "Error al actualizar el centro de costo: " . $conexion->error;

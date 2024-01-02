@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-12-2023 a las 18:53:03
+-- Tiempo de generación: 02-01-2024 a las 19:07:46
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -87,7 +87,6 @@ INSERT INTO `informacion_asociados` (`id_asociado`, `legajo`, `nombre`, `apellid
 (19, '986', 'Ariel Gustavo', 'Fernandez'),
 (20, '1032', 'Rolando Hector', 'Falcon'),
 (21, '1035', 'Luis Fernando', 'Serrano'),
-(22, '1035', 'Luis Fernando', 'Serrano'),
 (23, '1038', 'Cristian Fabian', 'Ferreyra'),
 (24, '1046', 'Silverio', 'Sanchez'),
 (25, '1047', 'Angel Diego Jose', 'Galeano'),
@@ -209,6 +208,8 @@ CREATE TABLE `registro_horas_trabajo` (
   `id_registro` int(11) NOT NULL,
   `legajo` varchar(4) DEFAULT NULL,
   `fecha` date DEFAULT NULL,
+  `año` year(4) GENERATED ALWAYS AS (year(`fecha`)) STORED,
+  `mes` int(11) GENERATED ALWAYS AS (month(`fecha`)) STORED,
   `horas_trabajadas` decimal(5,2) DEFAULT NULL,
   `centro_costo` varchar(3) DEFAULT NULL,
   `proceso` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
@@ -225,7 +226,7 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (4, '298', '2023-11-01', '8.00', NULL, NULL),
 (5, '493', '2023-11-01', '6.20', NULL, NULL),
 (6, '532', '2023-11-01', '0.00', NULL, NULL),
-(7, '574', '2023-11-01', '8.00', NULL, NULL),
+(7, '574', '2023-11-01', '8.00', '1', NULL),
 (8, '591', '2023-11-01', '0.00', NULL, NULL),
 (9, '666', '2023-11-01', '0.00', NULL, NULL),
 (10, '835', '2023-11-01', '0.00', NULL, NULL),
@@ -247,7 +248,7 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (26, '1056', '2023-11-01', '8.90', NULL, NULL),
 (27, '1072', '2023-11-01', '4.50', NULL, NULL),
 (28, '1081', '2023-11-01', '0.00', NULL, NULL),
-(29, '1083', '2023-11-01', '6.30', NULL, NULL),
+(29, '1083', '2023-11-01', '6.30', '1', NULL),
 (30, '1118', '2023-11-01', '0.00', NULL, NULL),
 (31, '1122', '2023-11-01', '8.00', NULL, NULL),
 (32, '1129', '2023-11-01', '8.00', NULL, NULL),
@@ -373,9 +374,9 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (152, '1347', '2023-11-02', '8.00', NULL, NULL),
 (153, '1352', '2023-11-02', '8.00', NULL, NULL),
 (154, '1388', '2023-11-02', '6.50', NULL, NULL),
-(155, '1395', '2023-11-02', '9.00', NULL, NULL),
+(155, '1395', '2023-11-02', '9.00', '1', NULL),
 (156, '1397', '2023-11-02', '0.00', NULL, NULL),
-(157, '1404', '2023-11-02', '4.00', '1', NULL),
+(157, '1404', '2023-11-02', '4.00', '6', NULL),
 (158, '1406', '2023-11-02', '8.00', NULL, NULL),
 (159, '1407', '2023-11-02', '7.80', NULL, NULL),
 (160, '1412', '2023-11-02', '8.00', NULL, NULL),
@@ -1120,7 +1121,7 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (899, '1497', '2023-11-09', '6.00', NULL, NULL),
 (900, '1498', '2023-11-09', '8.00', NULL, NULL),
 (901, '107', '2023-11-10', '0.00', NULL, NULL),
-(902, '238', '2023-11-10', '8.00', NULL, NULL),
+(902, '238', '2023-11-10', '8.00', '1', NULL),
 (903, '240', '2023-11-10', '0.00', NULL, NULL),
 (904, '298', '2023-11-10', '0.00', NULL, NULL),
 (905, '493', '2023-11-10', '0.00', NULL, NULL),
@@ -1574,7 +1575,7 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (1352, '1347', '2023-11-14', '0.00', NULL, NULL),
 (1353, '1352', '2023-11-14', '0.00', NULL, NULL),
 (1354, '1388', '2023-11-14', '8.00', NULL, NULL),
-(1355, '1395', '2023-11-14', '8.00', NULL, NULL),
+(1355, '1395', '2023-11-14', '8.00', '1', NULL),
 (1356, '1397', '2023-11-14', '0.00', NULL, NULL),
 (1357, '1404', '2023-11-14', '0.00', '1', NULL),
 (1358, '1406', '2023-11-14', '8.00', NULL, NULL),
@@ -1774,7 +1775,7 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (1552, '1347', '2023-11-16', '0.00', NULL, NULL),
 (1553, '1352', '2023-11-16', '0.00', NULL, NULL),
 (1554, '1388', '2023-11-16', '10.30', NULL, NULL),
-(1555, '1395', '2023-11-16', '4.30', NULL, NULL),
+(1555, '1395', '2023-11-16', '4.30', '2', NULL),
 (1556, '1397', '2023-11-16', '7.50', NULL, NULL),
 (1557, '1404', '2023-11-16', '0.00', '1', NULL),
 (1558, '1406', '2023-11-16', '5.50', NULL, NULL),
@@ -1938,7 +1939,7 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (1716, '970', '2023-11-18', '0.00', NULL, NULL),
 (1717, '971', '2023-11-18', '0.00', NULL, NULL),
 (1718, '974', '2023-11-18', '0.00', NULL, NULL),
-(1719, '986', '2023-11-18', '12.00', '1', NULL),
+(1719, '986', '2023-11-18', '12.00', '8', NULL),
 (1720, '1032', '2023-11-18', '0.00', NULL, NULL),
 (1721, '1035', '2023-11-18', '0.00', NULL, NULL),
 (1722, '1038', '2023-11-18', '0.00', NULL, NULL),
@@ -2137,7 +2138,7 @@ INSERT INTO `registro_horas_trabajo` (`id_registro`, `legajo`, `fecha`, `horas_t
 (1915, '962', '2023-11-20', '0.00', NULL, NULL),
 (1916, '970', '2023-11-20', '0.00', NULL, NULL),
 (1917, '971', '2023-11-20', '0.00', NULL, NULL),
-(1918, '974', '2023-11-20', '8.00', NULL, NULL),
+(1918, '974', '2023-11-20', '8.00', '8', NULL),
 (1919, '986', '2023-11-20', '0.00', '1', NULL),
 (1920, '1032', '2023-11-20', '0.00', NULL, NULL),
 (1921, '1035', '2023-11-20', '0.00', NULL, NULL),
