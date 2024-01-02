@@ -1,29 +1,10 @@
-<?php include 'templates/header.php'; ?>
-<h1>Bienvenido a Mi Proyecto</h1>
-<!-- Contenido de la página principal -->
-
-<ul>
-            <li><a href="index.php" >Inicio</a></li>
-            <li><a href="/phpMyAdmin/" target="_blank">Visit the AppServ Open Project</a></li>
-            <li><a href="insertar_centro.php">Actualizar</a></li>
-            <li><a href="mostrar_horas.php">Visualizar</a></li>
-
-        </ul>
-
-
-
-        <?php
+<?php 
+include 'templates/header.php'; 
 require_once 'includes/db.php';
-require_once 'legajo.php';
 
-
-
-
-// Obtener el legajo desde el parámetro GET
-$legajo = isset($_GET['legajo']) ? $_GET['legajo'] : '';
 
 // Preparar la consulta SQL
-$sql = "SELECT * FROM registro_horas_trabajo WHERE horas_trabajadas > 1 ORDER BY fecha ASC";
+$sql = "SELECT * FROM informacion_asociados ";
 
 // Preparar la sentencia
 $stmt = $conexion->prepare($sql);
@@ -40,41 +21,30 @@ $resultado = $stmt->get_result();
 // Cerrar la sentencia
 $stmt->close();
 
-// Comenzar el HTML
-echo "<!DOCTYPE html><html><head><title>Registro de Horas</title></head><body>";
+
 
 // Verificar si hay resultados y mostrarlos
 if ($resultado->num_rows > 0) {
     echo "<table border='1'>
             <tr>
                 <th>Legajo</th>
-                <th>Fecha</th>
-                <th>Horas</th>
-                <th>Centro de costo</th>
-                <th>Proceso</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
             </tr>";
     while($fila = $resultado->fetch_assoc()) {
         echo "<tr>
-                <td>".$fila["legajo"]."</td>
-                <td>".$fila["fecha"]."</td>  
-                <td>".$fila["horas_trabajadas"]."</td> 
-                <td>".(empty($fila["centro_costo"]) ? "Vacío" : $fila["centro_costo"])."</td> 
-                <td>".$fila["proceso"]."</td> 
+                <td> <a href='mostrar_horas.php?legajo=".$fila["legajo"]."'>  ".$fila["legajo"]."  </a>   </td>
+                <td>".$fila["nombre"]."</td> 
+                <td>".$fila["apellido"]."</td> 
             </tr>";
     }
     echo "</table>";
 } else {
     echo "No se encontraron resultados.";
 }
-
-
-// Finalizar el HTML
 echo "</body></html>";
 
 // Cerrar la conexión
 $conexion->close();
-?>
 
-
-
-<?php include 'templates/footer.php'; ?>
+include 'templates/footer.php'; ?>

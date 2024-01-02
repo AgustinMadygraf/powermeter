@@ -1,4 +1,5 @@
 <?php
+include 'templates/header.php'; 
 require_once 'includes/db.php';
 require_once 'legajo.php';
 
@@ -65,12 +66,8 @@ if ($resultado->num_rows > 0) {
     }
     echo "</table>";
 } else {
-    echo "No se encontraron resultados.";
+    echo "No se encontraron resultados para agregar centro de costos.";
 }
-
-
-
-
 
 // Finalizar el HTML
 echo "</body></html>";

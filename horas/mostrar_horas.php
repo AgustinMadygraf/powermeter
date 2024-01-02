@@ -1,12 +1,13 @@
 <?php
+#mostrar_horas.php
+include 'templates/header.php'; 
 require_once 'includes/db.php';
 require_once 'legajo.php';
 
 
 
 
-// Obtener el legajo desde el parámetro GET
-$legajo = isset($_GET['legajo']) ? $_GET['legajo'] : '';
+
 
 // Preparar la consulta SQL
 $sql = "SELECT * FROM registro_horas_trabajo WHERE legajo = ? AND horas_trabajadas > 1 ORDER BY fecha ASC";
@@ -28,6 +29,18 @@ $stmt->close();
 
 // Comenzar el HTML
 echo "<!DOCTYPE html><html><head><title>Registro de Horas</title></head><body>";
+function obtenerNombreCentroCosto($codigo) {
+    $nombresCentroCosto = [
+        '1' => 'Maquina de bolsas',
+        '2' => 'Boletas y folletería',
+        '3' => 'Logistica',
+        '4' => 'Administración',
+        // Agrega más códigos y nombres según sea necesario
+    ];
+
+    return isset($nombresCentroCosto[$codigo]) ? $nombresCentroCosto[$codigo] : 'Desconocido';
+}
+
 
 // Verificar si hay resultados y mostrarlos
 if ($resultado->num_rows > 0) {
@@ -43,10 +56,9 @@ if ($resultado->num_rows > 0) {
         echo "<tr>
                 <td>".$fila["legajo"]."</td>
                 <td>".$fila["fecha"]."</td>  
-                <td>".$fila["horas_trabajadas"]."</td> 
-                <td>".(empty($fila["centro_costo"]) ? "Vacío" : $fila["centro_costo"])."</td> 
-                <td>".$fila["proceso"]."</td> 
-            </tr>";
+                <td>".$fila["horas_trabajadas"]."</td><td>";
+                echo obtenerNombreCentroCosto($fila["centro_costo"]);
+                echo "</td><td>".$fila["proceso"]."</td> </tr>";
     }
     echo "</table>";
 } else {
