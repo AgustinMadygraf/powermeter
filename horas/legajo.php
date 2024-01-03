@@ -46,7 +46,7 @@ if (!empty($legajo)) {
         echo "Error al preparar la consulta: " . $conexion->error;
     }
 } else {
-    echo "Por favor, proporcione un legajo.";
+    echo "Por favor, proporcione un legajo.<br>";
 }
 
 

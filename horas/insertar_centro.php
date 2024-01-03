@@ -31,10 +31,26 @@ $stmt->close();
 echo "<!DOCTYPE html><html><head><title>Registro de Horas</title></head><body>";
 
 if ($resultado->num_rows > 0) {
+            // Convertir la fecha a día de la semana
+            $dia = date('l', strtotime($fila["fecha"])); // 'l' devuelve el día completo en inglés, p.ej., "Monday"
+
+            // Traducir el día al español
+            $diasEnEspañol = [
+                'Monday'    => 'Lunes',
+                'Tuesday'   => 'Martes',
+                'Wednesday' => 'Miércoles',
+                'Thursday'  => 'Jueves',
+                'Friday'    => 'Viernes',
+                'Saturday'  => 'Sábado',
+                'Sunday'    => 'Domingo',
+            ];
+            $diaEnEspañol = isset($diasEnEspañol[$dia]) ? $diasEnEspañol[$dia] : 'Desconocido';
+    
     echo "<table border='1'>
             <tr>
                 <th>Legajo</th>
                 <th>Fecha</th>
+                <th>Día</th>
                 <th>Horas</th>
                 <th>Centro de Costo</th>
                 <th>Acción</th>
@@ -43,6 +59,7 @@ if ($resultado->num_rows > 0) {
         echo "<tr>
                 <td>".$fila["legajo"]."</td>
                 <td>".$fila["fecha"]."</td>  
+                <td>".$diaEnEspañol."</td>  
                 <td>".$fila["horas_trabajadas"]."</td> 
                 <form action='procesar.php' method='GET'>
                     <td>

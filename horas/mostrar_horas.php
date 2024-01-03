@@ -5,12 +5,18 @@ require_once 'includes/db.php';
 require_once 'legajo.php';
 
 
+// Obtener el legajo desde el parámetro GET
+$legajo = isset($_GET['legajo']) ? $_GET['legajo'] : '';
 
+// Verificar si el legajo no está vacío
+if (!empty($legajo)) { $sql = "SELECT * FROM registro_horas_trabajo WHERE legajo = ? AND horas_trabajadas > 1 ORDER BY fecha ASC";
+}else {$sql = "SELECT * FROM registro_horas_trabajo WHERE  horas_trabajadas > 1 ORDER BY fecha ASC";
+}
 
 
 
 // Preparar la consulta SQL
-$sql = "SELECT * FROM registro_horas_trabajo WHERE legajo = ? AND horas_trabajadas > 1 ORDER BY fecha ASC";
+
 
 // Preparar la sentencia
 $stmt = $conexion->prepare($sql);
@@ -47,10 +53,26 @@ function obtenerNombreCentroCosto($codigo) {
 
 // Verificar si hay resultados y mostrarlos
 if ($resultado->num_rows > 0) {
+            // Convertir la fecha a día de la semana
+            $dia = date('l', strtotime($fila["fecha"])); // 'l' devuelve el día completo en inglés, p.ej., "Monday"
+
+            // Traducir el día al español
+            $diasEnEspañol = [
+                'Monday'    => 'Lunes',
+                'Tuesday'   => 'Martes',
+                'Wednesday' => 'Miércoles',
+                'Thursday'  => 'Jueves',
+                'Friday'    => 'Viernes',
+                'Saturday'  => 'Sábado',
+                'Sunday'    => 'Domingo',
+            ];
+            $diaEnEspañol = isset($diasEnEspañol[$dia]) ? $diasEnEspañol[$dia] : 'Desconocido';
+    
     echo "<table border='1'>
             <tr>
                 <th>Legajo</th>
                 <th>Fecha</th>
+                <th>Día</th>
                 <th>Horas</th>
                 <th>Centro de costo</th>
                 <th>Proceso</th>
@@ -59,6 +81,7 @@ if ($resultado->num_rows > 0) {
         echo "<tr>
                 <td>".$fila["legajo"]."</td>
                 <td>".$fila["fecha"]."</td>  
+                <td>".$diaEnEspañol."</td>  
                 <td>".$fila["horas_trabajadas"]."</td><td>";
                 echo obtenerNombreCentroCosto($fila["centro_costo"]);
                 echo "</td><td>".$fila["proceso"]."</td> </tr>";
